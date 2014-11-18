@@ -1,6 +1,6 @@
 package main;
 
-import field.FieldManager;
+import sanyi.FieldManager;
 
 import java.lang.String;
 
