@@ -5,18 +5,24 @@ package field;
  */
 public class fieldManager {
     private double[][] field;
-    private int width;
-    private int height;
+    private int X;
+    private int Y;
 
     public fieldManager(int X, int Y) {
-        width=X;
-        height=Y;
+        this.X=X;
+        this.Y=Y;
         this.field = new double[X][Y];
     }
 
     public void generateField()
     {
-
+        for (int x = 0; x < X; x++) {
+            for (int y = 0; y < Y; y++)
+            {
+                // TODO: epic equation
+                field[x][y] = 0;
+            }
+        }
     }
 
 }
