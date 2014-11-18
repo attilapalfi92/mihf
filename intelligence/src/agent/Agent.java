@@ -49,7 +49,7 @@ public class Agent extends Thread {
                 }
             }
 
-
+            // sajnálom, ez még szar. ha az ágens a pálya szélére ér, akkor out of bound exception lesz lépéskor.
             double values[] = new double[]{
                     Application.fieldManager.getField(field.getX(), field.getY() - 1).getValue(),
                     Application.fieldManager.getField(field.getX() - 1, field.getY()).getValue(),
@@ -73,7 +73,7 @@ public class Agent extends Thread {
                 }
             }
 
-            int maxIndex = maxIndexes.get((int)Math.random()*maxIndexes.size());
+            int maxIndex = maxIndexes.get((int)(Math.random()*maxIndexes.size()));
 
             switch (maxIndex) {
                 case 0:

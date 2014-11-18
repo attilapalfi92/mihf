@@ -16,7 +16,7 @@ public class FieldManager {
 
     public void generateField()
     {
-        double delta = 100/(fieldSize*fieldSize);
+        double delta = ((double)100)/(fieldSize*fieldSize);
         double current = 0;
         for (int x = 0; x < fieldSize; x++) {
             for (int y = 0; y < fieldSize; y++)

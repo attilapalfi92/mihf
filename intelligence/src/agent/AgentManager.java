@@ -29,12 +29,14 @@ public class AgentManager implements RoundFinishedHandler{
 
         for(int i = 0; i < agentNumber; i++)
         {
-            int startposX = (int)Math.random() * fieldSize;
-            int startposY = (int)Math.random() * fieldSize;
-            agents.get(i).setField(new Field(startposX, startposY));
-            agents.get(i).setRoundHandler(this);
-            agents.get(i).setReadyToRun(true);
-            agents.get(i).start();
+            Agent temp = new Agent();
+            int startposX = (int)(Math.random() * fieldSize);
+            int startposY = (int)(Math.random() * fieldSize);
+            temp.setField(new Field(startposX, startposY));
+            temp.setRoundHandler(this);
+            temp.setReadyToRun(true);
+            agents.add(temp);
+            temp.start();
         }
     }
 
