@@ -25,8 +25,8 @@ public class FieldManager {
 
         for (int i = 0; i < numberOfSamples; i++) {
             m[i] = Math.random();
-            hx[i] = Math.random();
-            hy[i] = Math.random();
+            hx[i] = Math.random()*fieldSize;
+            hy[i] = Math.random()*fieldSize;
         }
         for (int x = 0; x < fieldSize; x++) {
             for (int y = 0; y < fieldSize; y++) {
@@ -34,7 +34,8 @@ public class FieldManager {
                 // TODO: check epic equation
                 //megírtam a feltöltő függvényt. elvileg...
                 double z = 0;
-                for (int i = 0; i < 500; i++) {
+                for (int i = 0; i < numberOfSamples; i++) {
+                    //TODO: check hy és hx, mert lehet nem ezeknek kéne lenniük
                     z = z + 10 * (1 + m[i]) * Math.exp(-800 * (Math.pow(x - hx[i], 2) + Math.pow(y - hy[i], 2)));
                 }
                 field[x][y] = new Field(x, y, z);
