@@ -6,9 +6,9 @@ import java.lang.String;
 
 public class ClimberMain{
 
-    public static void main(String[] args ){
+    public static FieldManager fieldManager = new FieldManager(600);
 
-        FieldManager fm=new FieldManager(200,200);
+    public static void main(String[] args ){
 
     }
 

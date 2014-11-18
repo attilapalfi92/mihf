@@ -1,5 +1,8 @@
 package agent;
 
+import field.Field;
+import main.ClimberMain;
+
 import java.util.ArrayList;
 
 /**
@@ -11,6 +14,13 @@ public class AgentManager {
     public AgentManager (int K)
     {
         agents = new ArrayList<Agent>(K);
+        int fieldSize = ClimberMain.fieldManager.getFieldSize();
 
+        for(int i = 0; i < K; i++)
+        {
+            int startposX = (int)Math.random() * fieldSize;
+            int startposY = (int)Math.random() * fieldSize;
+            agents.get(i).setField(new Field(startposX, startposY));
+        }
     }
 }
