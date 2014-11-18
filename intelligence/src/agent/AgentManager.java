@@ -21,6 +21,7 @@ public class AgentManager {
             int startposX = (int)Math.random() * fieldSize;
             int startposY = (int)Math.random() * fieldSize;
             agents.get(i).setField(new Field(startposX, startposY));
+
         }
     }
 }
