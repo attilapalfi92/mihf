@@ -14,7 +14,6 @@ public class Agent extends Thread {
     private RoundFinishedHandler roundHandler;
     private boolean readyToRun;
 
-
     public void setReadyToRun(boolean readyToRun) {
         this.readyToRun = readyToRun;
     }

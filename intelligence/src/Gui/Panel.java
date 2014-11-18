@@ -18,9 +18,10 @@ public class Panel extends JPanel implements GraphicHandler {
         resolution = resolution_;
         pixelCount = pixelCount_;
         fieldColors = new Color[pixelCount][pixelCount];
+    }
 
+    public void recalculateFieldColors(){
         int pointsPerPixel = resolution / pixelCount;
-
         for(int x = 0; x < pixelCount; x++) {
             for (int y = 0; y < pixelCount; y++) {
 
@@ -40,20 +41,16 @@ public class Panel extends JPanel implements GraphicHandler {
                 // convert the value between 0 and 100
 
                 Color pixelColor;
-                if (value < 25)
-                {
+                if (value < 25) {
                     pixelColor = new Color(0, (int)(value/25) * 255, 255);
                 }
-                else if (value < 50)
-                {
+                else if (value < 50) {
                     pixelColor = new Color(0, 255, (int) (255 - ((value-25)/25) * 255));
                 }
-                else if (value < 75)
-                {
+                else if (value < 75) {
                     pixelColor = new Color((int)((value-50)/25) * 255, 255, 0);
                 }
-                else
-                {
+                else {
                     pixelColor = new Color(255, (int) (255 - ((value-75)/25) * 255), 0);
                 }
 
@@ -64,7 +61,7 @@ public class Panel extends JPanel implements GraphicHandler {
 
     @Override
     public void paint(Graphics g)
-    {
+    {   recalculateFieldColors();
         for(int x = 0; x < pixelCount; x++) {
             for (int y = 0; y < pixelCount; y++) {
                 g.setColor(fieldColors[x][y]);

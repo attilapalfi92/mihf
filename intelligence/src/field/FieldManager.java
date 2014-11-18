@@ -30,6 +30,7 @@ public class FieldManager {
         }
         for (int x = 0; x < fieldSize; x++) {
             for (int y = 0; y < fieldSize; y++) {
+               //field
                 // TODO: check epic equation
                 //megírtam a feltöltő függvényt. elvileg...
                 double z = 0;
@@ -48,6 +49,10 @@ public class FieldManager {
 
     public Field getField(int x, int y)
     {
-        return field[x][y];
+        if (x < fieldSize && y < fieldSize && x > 0 && y > 0)
+            return field[x][y];
+        else
+            //bit of patchwork munka, ha tudunk ennél jobbat akkor mehet, exceptionre megállna a tömb feltöltése
+            return new Field(0,0,0);
     }
 }
