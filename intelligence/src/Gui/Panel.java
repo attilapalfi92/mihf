@@ -2,6 +2,7 @@ package Gui;
 
 import Events.GraphicHandler;
 import agent.Agent;
+import field.Field;
 import main.Application;
 
 import javax.swing.*;
@@ -16,12 +17,14 @@ public class Panel extends JPanel implements GraphicHandler {
     private int pixelCount;
     private Color[][] fieldColors;
     private ArrayList<Agent> agents;
+    private ArrayList<Field> foundFields;
 
     public Panel(int resolution_, int pixelCount_) {
         resolution = resolution_;
         pixelCount = pixelCount_;
         fieldColors = new Color[pixelCount][pixelCount];
         agents = new ArrayList<Agent>();
+        foundFields = new ArrayList<Field>();
     }
 
     public void recalculateFieldColors(){
@@ -86,12 +89,18 @@ public class Panel extends JPanel implements GraphicHandler {
         for(int i = 0; i < agents.size(); i++) {
             g.fillRect(agents.get(i).getField().getX() - 1, agents.get(i).getField().getY() - 1, 2, 2);
         }
+
+        for(int i = 0; i < foundFields.size(); i++) {
+            g.fillRect(foundFields.get(i).getX() - 1, foundFields.get(i).getY() - 1, 2, 2);
+        }
     }
 
     @Override
-    public void onRedraw(ArrayList<Agent> agents_) {
+    public void onRedraw(ArrayList<Agent> agents_, ArrayList<Field> foundFields_) {
         if (agents_ != agents)
             agents = agents_;
+        if (foundFields != foundFields_)
+            foundFields = foundFields_;
         repaint();
     }
 }
