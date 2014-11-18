@@ -5,4 +5,8 @@ package field;
  */
 public class Field {
 
+    public double getFieldValue(int x, int y) {
+
+        return 0;
+    }
 }
