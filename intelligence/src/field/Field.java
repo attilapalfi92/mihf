@@ -26,6 +26,14 @@ public class Field {
         X = 0; Y = 0; value = 0;
     }
 
+    public int getX() {
+        return X;
+    }
+
+    public int getY() {
+        return Y;
+    }
+
     public void setPos (int x, int y)
     {
         X = x;

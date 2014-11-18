@@ -30,11 +30,11 @@ public class Agent extends Thread {
         }*/
 
         double values[] = new double [] {
-                ClimberMain.fieldManager.getField(x, y - 1).getValue(),
-                ClimberMain.fieldManager.getField(x - 1, y).getValue(),
-                ClimberMain.fieldManager.getField(x, y).getValue(),
-                ClimberMain.fieldManager.getField(x + 1, y).getValue(),
-                ClimberMain.fieldManager.getField(x, y + 1).getValue()
+                ClimberMain.fieldManager.getField(field.getX(),     field.getY() - 1).getValue(),
+                ClimberMain.fieldManager.getField(field.getX() - 1, field.getY()).getValue(),
+                ClimberMain.fieldManager.getField(field.getX(),     field.getY()).getValue(),
+                ClimberMain.fieldManager.getField(field.getX() + 1, field.getY()).getValue(),
+                ClimberMain.fieldManager.getField(field.getX(),     field.getY() + 1).getValue()
         };
 
         double maxValue = 0;
