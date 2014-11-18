@@ -10,7 +10,7 @@ public class Agent extends Thread {
 
     private int x;
     private int y;
-    private Field field;
+    private Field currentField;
 
     public Agent()
     {
@@ -18,51 +18,54 @@ public class Agent extends Thread {
     }
 
     public void setField (Field field) {
-        this.field = field;
+        this.currentField = field;
     }
 
     @Override
     public void run() {
+        int numberOfStays = 0;
+        while (numberOfStays < 4) {
 
-        /*while (lastPos != currectPost)
-        {
+            double values[] = new double[]{
+                    ClimberMain.fieldManager.getField(currentField.getX(), currentField.getY() - 1).getValue(),
+                    ClimberMain.fieldManager.getField(currentField.getX() - 1, currentField.getY()).getValue(),
+                    ClimberMain.fieldManager.getField(currentField.getX(), currentField.getY()).getValue(),
+                    ClimberMain.fieldManager.getField(currentField.getX() + 1, currentField.getY()).getValue(),
+                    ClimberMain.fieldManager.getField(currentField.getX(), currentField.getY() + 1).getValue()
+            };
 
-        }*/
-
-        double values[] = new double [] {
-                ClimberMain.fieldManager.getField(field.getX(),     field.getY() - 1).getValue(),
-                ClimberMain.fieldManager.getField(field.getX() - 1, field.getY()).getValue(),
-                ClimberMain.fieldManager.getField(field.getX(),     field.getY()).getValue(),
-                ClimberMain.fieldManager.getField(field.getX() + 1, field.getY()).getValue(),
-                ClimberMain.fieldManager.getField(field.getX(),     field.getY() + 1).getValue()
-        };
-
-        double maxValue = 0;
-        int maxIndex = -1;
-        for (int i = 0; i < 5; i++) {
-            if (values[i] > maxValue) {
-                maxValue = values[i];
-                maxIndex = i;
+            double maxValue = 0;
+            int maxIndex = -1;
+            for (int i = 0; i < 5; i++) {
+                if (values[i] > maxValue) {
+                    maxValue = values[i];
+                    maxIndex = i;
+                }
             }
-        }
 
-        switch (maxIndex) {
-            case 0:
-                y -= 1;
-                break;
-            case 1:
-                x -= 1;
-                break;
-            case 2:
-                break;
-            case 3:
-                x += 1;
-                break;
-            case 4:
-                y+=1;
-                break;
-            default:
-                break;
+            switch (maxIndex) {
+                case 0:
+                    y -= 1;
+                    numberOfStays = 0;
+                    break;
+                case 1:
+                    x -= 1;
+                    numberOfStays = 0;
+                    break;
+                case 2:
+                    numberOfStays++;
+                    break;
+                case 3:
+                    x += 1;
+                    numberOfStays = 0;
+                    break;
+                case 4:
+                    y += 1;
+                    numberOfStays = 0;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
