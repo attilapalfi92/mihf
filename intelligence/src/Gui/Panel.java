@@ -10,14 +10,11 @@ import java.awt.*;
  */
 public class Panel extends JPanel {
     private int pixelCount;
+    private Color[][] fieldColors;
 
     public Panel(int pixelCount) {
         this.pixelCount = pixelCount;
-    }
 
-    @Override
-    public void paint(Graphics g)
-    {
         for(int x = 0; x < pixelCount; x++) {
             for (int y = 0; y < pixelCount; y++) {
                 double value = Application.fieldManager.getField(x, y).getValue();
@@ -41,7 +38,22 @@ public class Panel extends JPanel {
                 {
                     pixelColor = new Color(255, (int) (255 - ((value-75)/25) * 255), 0);
                 }
+
+                fieldColors[x][y] = pixelColor;
             }
         }
+    }
+
+    @Override
+    public void paint(Graphics g)
+    {
+        for(int x = 0; x < pixelCount; x++) {
+            for (int y = 0; y < pixelCount; y++) {
+                g.setColor(fieldColors[x][y]);
+                g.fillRect(x, y, 1, 1);
+            }
+        }
+
+
     }
 }
