@@ -12,19 +12,20 @@ import java.util.ArrayList;
 public class Agent extends Thread {
     private Field field;
     private RoundFinishedHandler roundHandler;
-    private boolean allReady;
+    private boolean readyToRun;
+
+
+    public void setReadyToRun(boolean readyToRun) {
+        this.readyToRun = readyToRun;
+    }
 
     public void setRoundHandler(RoundFinishedHandler roundHandler) {
         this.roundHandler = roundHandler;
     }
 
-    public void setAllReady(boolean syncObject_) {
-        allReady = syncObject_;
-    }
-
     public Agent()
     {
-        allReady = false;
+
     }
 
     public void setField (Field field) {
@@ -38,7 +39,8 @@ public class Agent extends Thread {
         int numberOfStays = 0;
         while (numberOfStays < 4) {
 
-            while (allReady) {
+            // ha ez készenáll a futásra, akkor semmiképp se alszik.
+            while (!readyToRun) {
                 try {
                     sleep(10);
 
@@ -97,7 +99,7 @@ public class Agent extends Thread {
                     break;
             }
 
-            allReady = false;
+            readyToRun = false;
             roundHandler.onAgentRoundFinished(this);
         }
 

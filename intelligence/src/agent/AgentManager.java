@@ -15,7 +15,8 @@ public class AgentManager implements RoundFinishedHandler{
     private GraphicHandler handler;
     private int agentNumber;
     private int agentRoundsFinished;
-    private boolean allAgentsReady;
+    private Boolean allAgentsReady;
+    private Object syncObject;
 
     public AgentManager (int K, GraphicHandler handler_)
     {
@@ -24,26 +25,40 @@ public class AgentManager implements RoundFinishedHandler{
         agentNumber = K;
         agentRoundsFinished = 0;
         int fieldSize = Application.fieldManager.getFieldSize();
+        allAgentsReady = true;
 
-        for(int i = 0; i < K; i++)
+        for(int i = 0; i < agentNumber; i++)
         {
             int startposX = (int)Math.random() * fieldSize;
             int startposY = (int)Math.random() * fieldSize;
             agents.get(i).setField(new Field(startposX, startposY));
             agents.get(i).setRoundHandler(this);
+            agents.get(i).setReadyToRun(true);
+            agents.get(i).start();
         }
     }
 
     // ez teljesen rossz ki kell találni valamit.
     @Override
     public void onAgentRoundFinished(Agent agent) {
-        if (agentRoundsFinished++ == agentNumber)
+        synchronized (syncObject)
         {
-            for(int i = 0; i < agentNumber; i++) {
-                agents.get(i).setAllReady(true);
+            // ha minden ágens befejezte a kört
+            if (agentRoundsFinished++ == agentNumber) {
+
+                // egyesével újraengedélyezzük őket
+                for(int i = 0; i < agentNumber; i++) {
+                    agents.get(i).setReadyToRun(true);
+                }
+
+                // majd kérünk egy kirajzolást
+                handler.onRedraw();
             }
 
-            agentRoundsFinished = 0;
+            // ha még nem fejezte be minden ágnes
+            else {
+                // akkor nincs lófasz se.
+            }
         }
     }
 }
