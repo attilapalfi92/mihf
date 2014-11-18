@@ -33,6 +33,7 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
             int startposY = (int)(Math.random() * fieldSize);
             temp.setField(new Field(startposX, startposY));
             temp.setRoundHandler(this);
+            temp.setFinishedHandler(this);
             temp.setReadyToRun(true);
             agents.add(temp);
             temp.start();
