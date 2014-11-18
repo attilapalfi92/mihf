@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
     private ArrayList<Agent> agents;
+    private ArrayList<Double> foundValues;
     private GraphicHandler handler;
     private int agentNumber;
     private int agentRoundsFinished;
@@ -21,6 +22,7 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
     public AgentManager (int K, GraphicHandler handler_)
     {
         handler = handler_;
+        foundValues=new ArrayList<Double>();
         agents = new ArrayList<Agent>(K);
         agentNumber = K;
         agentRoundsFinished = 0;
@@ -67,10 +69,11 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
     }
 
     @Override
-    public void onAgentFinishedRunning(Agent agent) {
+    public void onAgentFinishedRunning(Agent agent, double foundValue) {
         synchronized (syncObject) {
             this.agents.remove(agent);
             this.agentNumber--;
+            foundValues.add(foundValue);
         }
     }
 }

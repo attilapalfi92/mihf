@@ -115,7 +115,7 @@ public class Agent extends Thread {
             readyToRun = false;
             roundHandler.onAgentRoundFinished(this);
         }
-        finishedHandler.onAgentFinishedRunning(this);
+        finishedHandler.onAgentFinishedRunning(this,Application.fieldManager.getField(field.getX(), field.getY()).getValue());
     }
 
 
