@@ -60,19 +60,14 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
 
                 agentRoundsFinished = 0;
             }
-
-            // ha még nem fejezte be minden ágnes
-            else {
-                // akkor nincs lófasz se.
-            }
         }
     }
 
     @Override
     public void onAgentFinishedRunning(Agent agent, double foundValue) {
         synchronized (syncObject) {
-            this.agents.remove(agent);
-            this.agentNumber--;
+            agents.remove(agent);
+            agentNumber--;
             foundValues.add(new Field(agent.getField().getX(), agent.getField().getY(), foundValue));
         }
     }
