@@ -1,13 +1,14 @@
 package main;
 
+import field.fieldManager;
+
 import java.lang.String;
-import java.lang.System;
 
 public class ClimberMain{
 
     public static void main(String[] args ){
 
-        System.out.println("Hello Atis");
+        fieldManager fm=new fieldManager(200,200);
 
     }
 
