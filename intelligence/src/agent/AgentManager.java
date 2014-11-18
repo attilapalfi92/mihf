@@ -15,8 +15,7 @@ public class AgentManager implements RoundFinishedHandler{
     private GraphicHandler handler;
     private int agentNumber;
     private int agentRoundsFinished;
-    private Boolean allAgentsReady;
-    private Object syncObject;
+    private static Object syncObject = new Object();
 
     public AgentManager (int K, GraphicHandler handler_)
     {
@@ -25,7 +24,6 @@ public class AgentManager implements RoundFinishedHandler{
         agentNumber = K;
         agentRoundsFinished = 0;
         int fieldSize = Application.fieldManager.getFieldSize();
-        allAgentsReady = true;
 
         for(int i = 0; i < agentNumber; i++)
         {
