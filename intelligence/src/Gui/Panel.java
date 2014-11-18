@@ -1,10 +1,12 @@
 package Gui;
 
 import Events.GraphicHandler;
+import agent.Agent;
 import main.Application;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by Attila on 2014.11.18..
@@ -13,11 +15,13 @@ public class Panel extends JPanel implements GraphicHandler {
     private int resolution;
     private int pixelCount;
     private Color[][] fieldColors;
+    private ArrayList<Agent> agents;
 
     public Panel(int resolution_, int pixelCount_) {
         resolution = resolution_;
         pixelCount = pixelCount_;
         fieldColors = new Color[pixelCount][pixelCount];
+        agents = new ArrayList<Agent>();
     }
 
     public void recalculateFieldColors(){
@@ -77,10 +81,17 @@ public class Panel extends JPanel implements GraphicHandler {
                 g.fillRect(x, y, 1, 1);
             }
         }
+
+        g.setColor(new Color(0, 0, 0));
+        for(int i = 0; i < agents.size(); i++) {
+            g.fillRect(agents.get(i).getField().getX() - 1, agents.get(i).getField().getY() - 1, 2, 2);
+        }
     }
 
     @Override
-    public void onRedraw() {
+    public void onRedraw(ArrayList<Agent> agents_) {
+        if (agents_ != agents)
+            agents = agents_;
         repaint();
     }
 }

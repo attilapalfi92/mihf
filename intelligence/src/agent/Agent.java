@@ -14,6 +14,10 @@ public class Agent extends Thread {
     private RoundFinishedHandler roundHandler;
     private boolean readyToRun;
 
+    public Field getField() {
+        return field;
+    }
+
     public void setReadyToRun(boolean readyToRun) {
         this.readyToRun = readyToRun;
     }
@@ -41,7 +45,7 @@ public class Agent extends Thread {
             // ha ez készenáll a futásra, akkor semmiképp se alszik.
             while (!readyToRun) {
                 try {
-                    sleep(10);
+                    sleep(1000);
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
