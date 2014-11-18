@@ -90,6 +90,7 @@ public class Panel extends JPanel implements GraphicHandler {
             g.fillRect(agents.get(i).getField().getX() - 1, agents.get(i).getField().getY() - 1, 2, 2);
         }
 
+        g.setColor(new Color(255, 255, 255));
         for(int i = 0; i < foundFields.size(); i++) {
             g.fillRect(foundFields.get(i).getX() - 1, foundFields.get(i).getY() - 1, 2, 2);
         }

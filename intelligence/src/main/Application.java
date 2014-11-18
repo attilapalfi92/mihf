@@ -12,7 +12,7 @@ public class Application {
     public static void main(String[] args ){
         fieldManager.generateField();
         Window window = new Window();
-        AgentManager agentManager = new AgentManager(10, window.getPanel());
+        AgentManager agentManager = new AgentManager(100, window.getPanel());
     }
 
 }
