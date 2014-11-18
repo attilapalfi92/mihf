@@ -20,4 +20,9 @@ public class Window extends JWindow{
         this.setMinimumSize(new Dimension(windowSize, windowSize));
         this.setMaximumSize(new Dimension(windowSize, windowSize));
     }
+
+    public void repaint() {
+        panel.repaint();
+    }
+
 }
