@@ -14,6 +14,14 @@ public class Field {
         this.value = value;
     }
 
+    public void setX(int x) {
+        X = x;
+    }
+
+    public void setY(int y) {
+        Y = y;
+    }
+
     public Field (int x, int y)
     {
         X = x;

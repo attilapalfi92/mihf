@@ -7,9 +7,6 @@ import main.ClimberMain;
  * Created by Adam on 2014.11.18..
  */
 public class Agent extends Thread {
-
-    private int x;
-    private int y;
     private Field currentField;
 
     public Agent()
@@ -24,6 +21,8 @@ public class Agent extends Thread {
     @Override
     public void run() {
         int numberOfStays = 0;
+
+
         while (numberOfStays < 4) {
 
             double values[] = new double[]{
@@ -45,27 +44,28 @@ public class Agent extends Thread {
 
             switch (maxIndex) {
                 case 0:
-                    y -= 1;
+                    currentField.setY(currentField.getY() - 1);
                     numberOfStays = 0;
                     break;
                 case 1:
-                    x -= 1;
+                    currentField.setX(currentField.getX() - 1);
                     numberOfStays = 0;
                     break;
                 case 2:
                     numberOfStays++;
                     break;
                 case 3:
-                    x += 1;
+                    currentField.setX(currentField.getX() + 1);
                     numberOfStays = 0;
                     break;
                 case 4:
-                    y += 1;
+                    currentField.setY(currentField.getY() + 1);
                     numberOfStays = 0;
                     break;
                 default:
                     break;
             }
         }
+
     }
 }
