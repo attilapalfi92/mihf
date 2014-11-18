@@ -1,5 +1,6 @@
 package agent;
 
+import Events.AgentFinishedRunning;
 import Events.GraphicHandler;
 import Events.RoundFinishedHandler;
 import field.Field;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by Attila on 2014.11.18..
  */
-public class AgentManager implements RoundFinishedHandler{
+public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
     private ArrayList<Agent> agents;
     private GraphicHandler handler;
     private int agentNumber;
@@ -44,7 +45,7 @@ public class AgentManager implements RoundFinishedHandler{
         synchronized (syncObject)
         {
             // ha minden ágens befejezte a kört
-            if (++agentRoundsFinished == agentNumber) {
+            if (++agentRoundsFinished >= agentNumber) {
 
                 // egyesével újraengedélyezzük őket
                 for(int i = 0; i < agentNumber; i++) {
@@ -61,6 +62,14 @@ public class AgentManager implements RoundFinishedHandler{
             else {
                 // akkor nincs lófasz se.
             }
+        }
+    }
+
+    @Override
+    public void onAgentFinishedRunning(Agent agent) {
+        synchronized (syncObject) {
+            this.agents.remove(agent);
+            this.agentNumber--;
         }
     }
 }

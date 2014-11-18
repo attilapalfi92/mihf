@@ -1,5 +1,6 @@
 package agent;
 
+import Events.AgentFinishedRunning;
 import Events.RoundFinishedHandler;
 import field.Field;
 import main.Application;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 public class Agent extends Thread {
     private Field field;
     private RoundFinishedHandler roundHandler;
+    private AgentFinishedRunning finishedHandler;
     private volatile boolean readyToRun;
     private static int IDcounter = 0;
     private int ID;
@@ -28,6 +30,10 @@ public class Agent extends Thread {
         this.roundHandler = roundHandler;
     }
 
+    public void setFinishedHandler(AgentFinishedRunning finishedHandler) {
+        this.finishedHandler = finishedHandler;
+    }
+
     public Agent()
     {
         ID = IDcounter++;
@@ -41,11 +47,10 @@ public class Agent extends Thread {
 
         int numberOfStays = 0;
         while (numberOfStays < 4) {
-
             // ha nem áll készen, akkor alszik
             while (!readyToRun) {
                 try {
-                    sleep(1000);
+                    sleep(100);
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -82,26 +87,26 @@ public class Agent extends Thread {
                 case 0:
                     field.setY(field.getY() - 1);
                     numberOfStays = 0;
-                    System.out.println(ID + ". agent steps upwards");
+                    //System.out.println(ID + ". agent steps upwards");
                     break;
                 case 1:
                     field.setX(field.getX() - 1);
                     numberOfStays = 0;
-                    System.out.println(ID + ". agent steps left");
+                    //System.out.println(ID + ". agent steps left");
                     break;
                 case 2:
                     numberOfStays++;
-                    System.out.println(ID + ". agent staying on his ass");
+                    //System.out.println(ID + ". agent staying on his ass");
                     break;
                 case 3:
                     field.setX(field.getX() + 1);
                     numberOfStays = 0;
-                    System.out.println(ID + ". agent steps right");
+                    //System.out.println(ID + ". agent steps right");
                     break;
                 case 4:
                     field.setY(field.getY() + 1);
                     numberOfStays = 0;
-                    System.out.println(ID + ". agent steps downwards");
+                    //System.out.println(ID + ". agent steps downwards");
                     break;
                 default:
                     break;
@@ -110,7 +115,7 @@ public class Agent extends Thread {
             readyToRun = false;
             roundHandler.onAgentRoundFinished(this);
         }
-
+        finishedHandler.onAgentFinishedRunning(this);
     }
 
 
