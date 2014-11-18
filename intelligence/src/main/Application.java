@@ -12,8 +12,8 @@ public class Application {
     public static void main(String[] args ){
         fieldManager.generateField();
         Window window = new Window();
-        AgentManager agentManager = new AgentManager(10, window.getPanel());
-        System.gc();
+        AgentManager agentManager = new AgentManager(1, window.getPanel());
+        //System.gc();
     }
 
 }

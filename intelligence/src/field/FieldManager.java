@@ -16,7 +16,7 @@ public class FieldManager {
 
     public void generateField()
     {
-        int numberOfSamples = 500;
+        int numberOfSamples = 50;
         double delta = ((double) 100) / (fieldSize * fieldSize);
         double current = 0;
         double m[] = new double[numberOfSamples];
@@ -25,8 +25,8 @@ public class FieldManager {
 
         for (int i = 0; i < numberOfSamples; i++) {
             m[i] = Math.random();
-            hx[i] = Math.random()*fieldSize;
-            hy[i] = Math.random()*fieldSize;
+            hx[i] = Math.random();
+            hy[i] = Math.random();
         }
         for (int x = 0; x < fieldSize; x++) {
             for (int y = 0; y < fieldSize; y++) {
@@ -36,7 +36,7 @@ public class FieldManager {
                 double z = 0;
                 for (int i = 0; i < numberOfSamples; i++) {
                     //TODO: check hy és hx, mert lehet nem ezeknek kéne lenniük
-                    z = z + 10 * (1 + m[i]) * Math.exp(-800 * (Math.pow(x - hx[i], 2) + Math.pow(y - hy[i], 2)));
+                    z = z + 10 * (1 + m[i]) * Math.exp(-800 * (Math.pow(x / fieldSize - hx[i], 2) + Math.pow(y / fieldSize - hy[i], 2)));
                 }
                 field[x][y] = new Field(x, y, z);
                 //current += delta;
