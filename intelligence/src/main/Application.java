@@ -13,7 +13,6 @@ public class Application {
         fieldManager.generateField();
         Window window = new Window();
         AgentManager agentManager = new AgentManager(1, window.getPanel());
-        //System.gc();
     }
 
 }

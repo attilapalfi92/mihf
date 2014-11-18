@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Agent extends Thread {
     private Field field;
     private RoundFinishedHandler roundHandler;
-    private boolean readyToRun;
+    private volatile boolean readyToRun;
 
     public Field getField() {
         return field;
@@ -35,17 +35,15 @@ public class Agent extends Thread {
         this.field = field;
     }
 
-    @Override
     public void run() {
-
 
         int numberOfStays = 0;
         while (numberOfStays < 4) {
 
-            // ha ez készenáll a futásra, akkor semmiképp se alszik.
+            // ha nem áll készen, akkor alszik
             while (!readyToRun) {
                 try {
-                    sleep(1000);
+                    sleep(10);
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();

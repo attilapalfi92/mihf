@@ -44,7 +44,7 @@ public class AgentManager implements RoundFinishedHandler{
         synchronized (syncObject)
         {
             // ha minden ágens befejezte a kört
-            if (agentRoundsFinished++ == agentNumber) {
+            if (++agentRoundsFinished == agentNumber) {
 
                 // egyesével újraengedélyezzük őket
                 for(int i = 0; i < agentNumber; i++) {
