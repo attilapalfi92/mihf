@@ -13,6 +13,8 @@ public class Agent extends Thread {
     private Field field;
     private RoundFinishedHandler roundHandler;
     private volatile boolean readyToRun;
+    private static int IDcounter = 0;
+    private int ID;
 
     public Field getField() {
         return field;
@@ -28,7 +30,7 @@ public class Agent extends Thread {
 
     public Agent()
     {
-
+        ID = IDcounter++;
     }
 
     public void setField (Field field) {
@@ -43,7 +45,7 @@ public class Agent extends Thread {
             // ha nem áll készen, akkor alszik
             while (!readyToRun) {
                 try {
-                    sleep(10);
+                    sleep(1000);
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -80,21 +82,26 @@ public class Agent extends Thread {
                 case 0:
                     field.setY(field.getY() - 1);
                     numberOfStays = 0;
+                    System.out.println(ID + ". agent steps upwards");
                     break;
                 case 1:
                     field.setX(field.getX() - 1);
                     numberOfStays = 0;
+                    System.out.println(ID + ". agent steps left");
                     break;
                 case 2:
                     numberOfStays++;
+                    System.out.println(ID + ". agent staying on his ass");
                     break;
                 case 3:
                     field.setX(field.getX() + 1);
                     numberOfStays = 0;
+                    System.out.println(ID + ". agent steps right");
                     break;
                 case 4:
                     field.setY(field.getY() + 1);
                     numberOfStays = 0;
+                    System.out.println(ID + ". agent steps downwards");
                     break;
                 default:
                     break;
