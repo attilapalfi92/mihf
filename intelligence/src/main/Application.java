@@ -4,7 +4,7 @@ import field.FieldManager;
 
 import java.lang.String;
 
-public class ClimberMain{
+public class Application {
 
     public static FieldManager fieldManager = new FieldManager(600);
 

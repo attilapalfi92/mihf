@@ -1,7 +1,7 @@
 package agent;
 
 import field.Field;
-import main.ClimberMain;
+import main.Application;
 
 import java.util.ArrayList;
 
@@ -28,11 +28,11 @@ public class Agent extends Thread {
         while (numberOfStays < 4) {
 
             double values[] = new double[]{
-                    ClimberMain.fieldManager.getField(field.getX(), field.getY() - 1).getValue(),
-                    ClimberMain.fieldManager.getField(field.getX() - 1, field.getY()).getValue(),
-                    ClimberMain.fieldManager.getField(field.getX(), field.getY()).getValue(),
-                    ClimberMain.fieldManager.getField(field.getX() + 1, field.getY()).getValue(),
-                    ClimberMain.fieldManager.getField(field.getX(), field.getY() + 1).getValue()
+                    Application.fieldManager.getField(field.getX(), field.getY() - 1).getValue(),
+                    Application.fieldManager.getField(field.getX() - 1, field.getY()).getValue(),
+                    Application.fieldManager.getField(field.getX(), field.getY()).getValue(),
+                    Application.fieldManager.getField(field.getX() + 1, field.getY()).getValue(),
+                    Application.fieldManager.getField(field.getX(), field.getY() + 1).getValue()
             };
 
             double maxValue = 0;

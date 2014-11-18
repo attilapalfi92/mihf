@@ -1,7 +1,7 @@
 package agent;
 
 import field.Field;
-import main.ClimberMain;
+import main.Application;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ public class AgentManager {
     public AgentManager (int K)
     {
         agents = new ArrayList<Agent>(K);
-        int fieldSize = ClimberMain.fieldManager.getFieldSize();
+        int fieldSize = Application.fieldManager.getFieldSize();
 
         for(int i = 0; i < K; i++)
         {
