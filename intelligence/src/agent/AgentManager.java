@@ -38,7 +38,7 @@ public class AgentManager implements RoundFinishedHandler{
         }
     }
 
-    // ez teljesen rossz ki kell találni valamit.
+    // szerintem már jó, mutasd meg dorkának, ő majd code reviewolja
     @Override
     public void onAgentRoundFinished(Agent agent) {
         synchronized (syncObject)
