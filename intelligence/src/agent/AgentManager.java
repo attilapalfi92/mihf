@@ -53,6 +53,8 @@ public class AgentManager implements RoundFinishedHandler{
 
                 // majd kérünk egy kirajzolást
                 handler.onRedraw(agents);
+
+                agentRoundsFinished = 0;
             }
 
             // ha még nem fejezte be minden ágnes
