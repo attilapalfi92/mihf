@@ -1,5 +1,6 @@
 package agent;
 
+import Events.RoundFinishedHandler;
 import field.Field;
 import main.Application;
 
@@ -10,10 +11,20 @@ import java.util.ArrayList;
  */
 public class Agent extends Thread {
     private Field field;
+    private RoundFinishedHandler roundHandler;
+    private boolean allReady;
+
+    public void setRoundHandler(RoundFinishedHandler roundHandler) {
+        this.roundHandler = roundHandler;
+    }
+
+    public void setAllReady(boolean syncObject_) {
+        allReady = syncObject_;
+    }
 
     public Agent()
     {
-
+        allReady = false;
     }
 
     public void setField (Field field) {
@@ -22,10 +33,20 @@ public class Agent extends Thread {
 
     @Override
     public void run() {
+
+
         int numberOfStays = 0;
-
-
         while (numberOfStays < 4) {
+
+            while (allReady) {
+                try {
+                    sleep(10);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
 
             double values[] = new double[]{
                     Application.fieldManager.getField(field.getX(), field.getY() - 1).getValue(),
@@ -75,7 +96,12 @@ public class Agent extends Thread {
                 default:
                     break;
             }
+
+            allReady = false;
+            roundHandler.onAgentRoundFinished(this);
         }
 
     }
+
+
 }

@@ -13,16 +13,15 @@ public class Window extends JWindow{
     private int windowSize;
 
     public Window () {
-        panel = new Panel(windowSize);
+        windowSize = 600;
+        panel = new Panel(Application.fieldManager.getFieldSize(), windowSize);
         this.add(panel);
-        windowSize = Application.fieldManager.getFieldSize();
         this.setSize(windowSize, windowSize);
         this.setMinimumSize(new Dimension(windowSize, windowSize));
         this.setMaximumSize(new Dimension(windowSize, windowSize));
     }
 
-    public void repaint() {
-        panel.repaint();
+    public Panel getPanel (){
+        return panel;
     }
-
 }
