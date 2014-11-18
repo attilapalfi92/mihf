@@ -1,32 +1,41 @@
 package agent;
 
 import field.Field;
-import javafx.util.Pair;
-
-import java.util.ArrayList;
 
 /**
  * Created by Adam on 2014.11.18..
  */
-public class Agent {
+public class Agent extends Thread {
 
     private int x;
     private int y;
+    private Field field;
 
+    public Agent(Field f)
+    {
+        field = f;
+    }
 
-    public double run(Field f) {
+    @Override
+    public void run() {
 
         double values[] = new double[] {
-            f.getFieldValue(x,y - 1), f.getFieldValue(x - 1,y), f.getFieldValue(x,y), f.getFieldValue(x + 1,y), f.getFieldValue(x,y + 1)} ;
+            field.getFieldValue(x, y - 1),
+            field.getFieldValue(x - 1, y),
+            field.getFieldValue(x, y),
+            field.getFieldValue(x + 1, y),
+            field.getFieldValue(x, y + 1) };
+
         double maxValue = 0;
-        int maxI = -1;
+        int maxIndex = -1;
         for (int i = 0; i < 5; i++) {
             if (values[i] > maxValue) {
                 maxValue = values[i];
-                maxI = i;
+                maxIndex = i;
             }
         }
-        switch (maxI) {
+
+        switch (maxIndex) {
             case 0:
                 y -= 1;
                 break;
@@ -44,6 +53,7 @@ public class Agent {
             default:
                 break;
         }
-        return 0;
+
+
     }
 }
