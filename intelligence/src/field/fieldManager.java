@@ -11,7 +11,7 @@ public class fieldManager {
     public fieldManager(int X, int Y) {
         width=X;
         height=Y;
-        this.field = new double[Y][X];
+        this.field = new double[X][Y];
     }
 
     public void generateField()
