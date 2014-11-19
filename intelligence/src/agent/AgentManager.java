@@ -19,8 +19,6 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning 
     private ArrayList<Field> foundValues;
     private GraphicHandler handler;
     private int agentNumber;
-    private int agentRoundsFinished;
-    private Object syncObject = new Object();
     private long startTimeNano;
     private Statistics statistics;
 
@@ -28,7 +26,6 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning 
         handler = handler_;
         foundValues = new ArrayList<Field>();
         agentNumber = K;
-        agentRoundsFinished = 0;
         this.statistics = statistics;
         int fieldSize = Application.fieldManager.getFieldSize();
         agents = new ArrayList<Agent>();
