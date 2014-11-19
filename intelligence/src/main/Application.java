@@ -20,6 +20,7 @@ public class Application {
             int numberOfBeams = numberOfAgents;
             Logger.setNumberOfBeams(numberOfBeams);
             AgentManager agentManager = new AgentManager(numberOfBeams, null);
+            agentManager.startAgentSimulation();
         }
     }
 
@@ -31,7 +32,7 @@ public class Application {
             Logger.setNumberOfBeams(numberOfBeams);
             AgentManager agentManager = new AgentManager(numberOfBeams, null);
             System.out.println("------------------ASD--------------------");
-            startNext = false;
+            agentManager.startAgentSimulation();
         }
     }
 

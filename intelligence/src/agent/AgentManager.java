@@ -18,7 +18,7 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
     private GraphicHandler handler;
     private int agentNumber;
     private int agentRoundsFinished;
-    private Object syncObject = new Object();
+    private  Object syncObject = new Object();
     private long startTimeNano;
 
     public AgentManager (int K, GraphicHandler handler_)
@@ -53,7 +53,8 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
         //todo block the main thread
 
         while(true){
-            synchronized (syncObject) {
+            //synchronized (syncObject) {
+            if(agents.size()>0){
                 if (agents.get(0).isAlive())
                     try {
                         agents.get(0).join();
