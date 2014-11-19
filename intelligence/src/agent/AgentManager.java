@@ -3,6 +3,7 @@ package agent;
 import Events.AgentFinishedRunning;
 import Events.GraphicHandler;
 import Events.RoundFinishedHandler;
+import Log.Logger;
 import field.Field;
 import main.Application;
 
@@ -18,6 +19,7 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
     private int agentNumber;
     private int agentRoundsFinished;
     private static Object syncObject = new Object();
+    private long startTimeNano;
 
     public AgentManager (int K, GraphicHandler handler_)
     {
@@ -27,6 +29,8 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
         agentNumber = K;
         agentRoundsFinished = 0;
         int fieldSize = Application.fieldManager.getFieldSize();
+
+        startTimeNano = System.nanoTime();
 
         for(int i = 0; i < agentNumber; i++)
         {
@@ -68,7 +72,14 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
         synchronized (syncObject) {
             agents.remove(agent);
             agentNumber--;
-            foundValues.add(new Field(agent.getField().getX(), agent.getField().getY(), foundValue));
+            Field found = new Field(agent.getField().getX(), agent.getField().getY(), foundValue);
+            foundValues.add(found);
+            Logger.getFoundOptimums().add(found);
+
+            if (agentNumber == 0) {
+                long totalRunTime = System.nanoTime() - startTimeNano;
+                Logger.setSearchTimeNano(totalRunTime);
+            }
         }
     }
 }
