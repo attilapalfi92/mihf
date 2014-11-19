@@ -8,6 +8,7 @@ import main.Application;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Attila on 2014.11.18..
@@ -30,16 +31,45 @@ public class Panel extends JPanel implements GraphicHandler {
 
     public void recalculateFieldColors(){
         double absoluteMaxVal = 0;
+        ArrayList<Double> histogramValues=new ArrayList<Double>();
         for (int i = 0; i < resolution; i++) {
             for (int j = 0; j < resolution; j++) {
                 double val = Application.fieldManager.getField(i, j).getValue();
+                histogramValues.add(val);
                 if (val > absoluteMaxVal)
                     absoluteMaxVal = val;
             }
         }
 
+        Collections.sort(histogramValues);
+        ArrayList<Color> availableColors = new ArrayList<Color>();
+        for (int i = 0; i < 256; i++) {
+            availableColors.add(new Color(0, i, 255));
+        }
+        for (int i = 0; i < 256; i++) {
+            availableColors.add(new Color(0, 255, 255 - i));
+        }
+        for (int i = 0; i < 256; i++) {
+            availableColors.add(new Color(i, 255, 0));
+        }
+        for (int i = 0; i < 256; i++) {
+            availableColors.add(new Color(255, 255 - i, 0));
+        }
+
         int pointsPerPixel = resolution / pixelCount;
         for(int x = 0; x < pixelCount; x++) {
+            for (int y = 0; y < pixelCount; y++) {
+                int indexOfValue=histogramValues.indexOf(Application.fieldManager.getField(x,y).getValue());
+                int numberOfValuesToColor=(int)Math.ceil(histogramValues.size()/availableColors.size());
+
+                Color c=availableColors.get(Math.min(indexOfValue/numberOfValuesToColor,1023));
+                fieldColors[x][y]=c;
+            }
+        }
+
+
+
+       /* for(int x = 0; x < pixelCount; x++) {
             for (int y = 0; y < pixelCount; y++) {
 
                 // searching the max value
@@ -57,9 +87,13 @@ public class Panel extends JPanel implements GraphicHandler {
                 // convert the value between 0 and 100
                 value = (value / absoluteMaxVal) * 100;
 
+                int r,g,b;
+
+
                 Color pixelColor;
                 if (value < 25) {
-                    pixelColor = new Color(0, (int)(value/25) * 255, 255);
+                    pixelColor = new Color(0,(int)value/25*255, 255);
+                    System.out.println(value);
                 }
                 else if (value < 50) {
                     pixelColor = new Color(0, 255, (int) (255 - ((value-25)/25) * 255));
@@ -73,7 +107,7 @@ public class Panel extends JPanel implements GraphicHandler {
 
                 fieldColors[x][y] = pixelColor;
             }
-        }
+        }*/
     }
 
     @Override
