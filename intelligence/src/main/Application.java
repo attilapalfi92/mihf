@@ -82,8 +82,8 @@ public class Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //graphicalRun(10);
-        runOnSame(2, 10);
+        graphicalRun(10);
+        //runOnSame(2, 10);
 
         /*fieldManager.generateField();
         Window window = new Window();

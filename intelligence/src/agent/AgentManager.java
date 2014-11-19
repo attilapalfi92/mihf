@@ -6,6 +6,7 @@ import Events.RoundFinishedHandler;
 import Log.Logger;
 import Log.Statistics;
 import field.Field;
+import javafx.util.Pair;
 import main.Application;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by Attila on 2014.11.18..
  */
-public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
+public class AgentManager{ //implements RoundFinishedHandler, AgentFinishedRunning{
     private ArrayList<Agent> agents;
     private ArrayList<Field> foundValues;
     private GraphicHandler handler;
@@ -27,16 +28,14 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
     {
         handler = handler_;
         foundValues=new ArrayList<Field>();
-        agents = new ArrayList<Agent>(K);
         agentNumber = K;
         agentRoundsFinished = 0;
-        int fieldSize = Application.fieldManager.getFieldSize();
         this.statistics = statistics;
 
 
         startTimeNano = System.nanoTime();
 
-        for(int i = 0; i < agentNumber; i++)
+        /*for(int i = 0; i < agentNumber; i++)
         {
             Agent temp = new Agent();
             int startposX = (int)(Math.random() * fieldSize);
@@ -44,37 +43,24 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
             temp.setField(new Field(startposX, startposY));
             temp.setRoundHandler(this);
             temp.setFinishedHandler(this);
-            temp.setReadyToRun(true);
             agents.add(temp);
-        }
+        }*/
     }
 
     public void startAgentSimulation(){
-        for(int i = 0; i < agentNumber; i++)
-        {
-            agents.get(i).start();
+        int fieldSize = Application.fieldManager.getFieldSize();
+        for(int i = 0;i<agentNumber;i++){
+            Agent temp=new Agent();
+            int startposX = (int)(Math.random() * fieldSize);
+            int startposY = (int)(Math.random() * fieldSize);
+            temp.setField(new Field(startposX, startposY));
+            Pair<Field, Integer> optimum=temp.run();
+            Logger.getFoundOptimums().put(optimum.getKey(), optimum.getValue());
         }
 
-        while(true){
-            if(agents.size()>0){
-                if (agents.get(0).isAlive()) {
-                    try {
-                        agents.get(0).join();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                else {
-                    break;
-                }
-            }
-            else {
-                break;
-            }
-        }
     }
 
-    // szerintem már jó, mutasd meg dorkának, ő majd code reviewolja
+   /* // szerintem már jó, mutasd meg dorkának, ő majd code reviewolja
     @Override
     public void onAgentRoundFinished(Agent agent) {
         synchronized (syncObject)
@@ -115,5 +101,5 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
                 //System.exit(0);
             }
         }
-    }
+    }*/
 }

@@ -3,6 +3,7 @@ package agent;
 import Events.AgentFinishedRunning;
 import Events.RoundFinishedHandler;
 import field.Field;
+import javafx.util.Pair;
 import main.Application;
 
 import java.util.ArrayList;
@@ -10,21 +11,16 @@ import java.util.ArrayList;
 /**
  * Created by Adam on 2014.11.18..
  */
-public class Agent extends Thread {
+public class Agent{
     private Field field;
     private RoundFinishedHandler roundHandler;
     private AgentFinishedRunning finishedHandler;
-    private volatile boolean readyToRun;
     private static int IDcounter = 0;
     private int stepCounter;
     private int ID;
 
     public Field getField() {
         return field;
-    }
-
-    public void setReadyToRun(boolean readyToRun) {
-        this.readyToRun = readyToRun;
     }
 
     public void setRoundHandler(RoundFinishedHandler roundHandler) {
@@ -44,19 +40,10 @@ public class Agent extends Thread {
         this.field = field;
     }
 
-    public void run() {
+    public Pair<Field,Integer> run() {
 
         int numberOfStays = 0;
         while (numberOfStays < 4) {
-            // ha nem áll készen, akkor alszik
-            while (!readyToRun) {
-                try {
-                    sleep(100);
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
 
             // sajnálom, ez még szar. ha az ágens a pálya szélére ér, akkor out of bound exception lesz lépéskor.
             double values[] = new double[]{
@@ -114,10 +101,11 @@ public class Agent extends Thread {
             }
 
             stepCounter++;
-            readyToRun = false;
-            roundHandler.onAgentRoundFinished(this);
+            //roundHandler.onAgentRoundFinished(this);
         }
-        finishedHandler.onAgentFinishedRunning(this,Application.fieldManager.getField(field.getX(), field.getY()).getValue(), stepCounter);
+        //finishedHandler.onAgentFinishedRunning(this,Application.fieldManager.getField(field.getX(), field.getY()).getValue(), stepCounter);
+        Pair<Field,Integer> v=new Pair<Field, Integer>(Application.fieldManager.getField(field.getX(), field.getY()),stepCounter);
+        return v;
     }
 
 
