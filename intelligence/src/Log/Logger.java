@@ -105,7 +105,7 @@ public class Logger {
                     globalFound = true;
                     globalOptimumStepCount = pairs.getValue();
                     statistics.getFoundGlobalOptimumSteps().add(globalOptimumStepCount);
-                    statistics.setGlobalOptimumValue(pairs.getKey().getValue());
+                    statistics.getFoundGlobalOptimumValues().add(pairs.getKey().getValue());
                 }
             }
             printWriter.println("Global optimum found: " + globalFound);
@@ -119,12 +119,15 @@ public class Logger {
                 Map.Entry<Field, Integer> pairs = (Map.Entry<Field, Integer>)it.next();
                 printWriter.println(pairs.getKey() + ", step count: " + pairs.getValue());
                 statistics.getFoundOptimumSteps().add(pairs.getValue());
+                statistics.getFoundOptimumValues().add(pairs.getKey().getValue());
             }
 
 
             printWriter.println("Total search time in nanos: " + searchTimeNano);
-
             printWriter.close();
+
+            statistics.createStatistics();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -18,12 +18,52 @@ public class Statistics {
     // each time a beam finds an optimum, it's value must be added to this list
     private ArrayList<Double> foundOptimumValues = new ArrayList<Double>();
 
-    private double globalOptimumValue;
+    // each time a beam finds a global optimum, it's value must be added to this list
+    private ArrayList<Double> foundGlobalOptimumValues = new ArrayList<Double>();
 
     public Statistics(int runNumber, int beamNumber) {
         this.runNumber = runNumber;
         this.beamNumber = beamNumber;
-        globalOptimumValue = 0;
+    }
+
+    public void createStatistics() {
+        float globalOptimumFindRate = ((float)foundGlobalOptimumSteps.size()) / runNumber;
+        System.out.println("Number of beams: " + beamNumber);
+        System.out.println("Number of searches: " + runNumber);
+        System.out.println("Rate of finding global optimums: " + globalOptimumFindRate);
+
+        int allStepsToGlobalOpt = 0;
+        for (int i = 0; i < foundGlobalOptimumSteps.size(); i++) {
+            allStepsToGlobalOpt += foundGlobalOptimumSteps.get(i);
+        }
+        double averageStepsToGlobalOpt = ((double)allStepsToGlobalOpt) / foundGlobalOptimumSteps.size();
+        System.out.println("Average steps to find global optimums: " + averageStepsToGlobalOpt);
+
+        int allStepsToOpt = 0;
+        for (int i = 0; i < foundOptimumSteps.size(); i++) {
+            allStepsToOpt += foundOptimumSteps.get(i);
+        }
+        double averageStepsToOpt = ((double)allStepsToGlobalOpt) / foundOptimumSteps.size();
+        System.out.println("Average steps to find optimums: " + averageStepsToOpt);
+
+        double allValuesOfGlobalOpt = 0;
+        for (int i = 0; i < foundGlobalOptimumValues.size(); i++) {
+            allValuesOfGlobalOpt += foundGlobalOptimumValues.get(i);
+        }
+        double averageGlobalOptimumValues = allValuesOfGlobalOpt / foundGlobalOptimumValues.size();
+        System.out.println("Average values of found global optimums: " + averageGlobalOptimumValues);
+
+        double allValuesOfOpt = 0;
+        for (int i = 0; i < foundOptimumValues.size(); i++) {
+            allValuesOfOpt += foundOptimumValues.get(i);
+        }
+        double averageOptimumValues = allValuesOfOpt / foundOptimumValues.size();
+        System.out.println("Average values of found optimums: " + averageOptimumValues);
+
+    }
+
+    public ArrayList<Double> getFoundGlobalOptimumValues() {
+        return foundGlobalOptimumValues;
     }
 
     public int getRunNumber() {
@@ -52,13 +92,5 @@ public class Statistics {
 
     public ArrayList<Double> getFoundOptimumValues() {
         return foundOptimumValues;
-    }
-
-    public double getGlobalOptimumValue() {
-        return globalOptimumValue;
-    }
-
-    public void setGlobalOptimumValue(double globalOptimumValue) {
-        this.globalOptimumValue = globalOptimumValue;
     }
 }
