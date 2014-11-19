@@ -25,6 +25,7 @@ public class Panel extends JPanel implements GraphicHandler {
         fieldColors = new Color[pixelCount][pixelCount];
         agents = new ArrayList<Agent>();
         foundFields = new ArrayList<Field>();
+        recalculateFieldColors();
     }
 
     public void recalculateFieldColors(){
@@ -77,7 +78,7 @@ public class Panel extends JPanel implements GraphicHandler {
 
     @Override
     public void paint(Graphics g)
-    {   recalculateFieldColors();
+    {
         for(int x = 0; x < pixelCount; x++) {
             for (int y = 0; y < pixelCount; y++) {
                 g.setColor(fieldColors[x][y]);
