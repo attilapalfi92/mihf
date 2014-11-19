@@ -13,31 +13,38 @@ public class Application {
     public static FieldManager fieldManager = new FieldManager(600);
 
     public static void main(String[] args ){
-        File numberOfRuns = new File("numberofruns.txt");
+        File numberOfRunsFile = new File("numberofruns.txt");
         BufferedReader reader = null;
 
         try {
-            reader = new BufferedReader(new FileReader(numberOfRuns));
+            reader = new BufferedReader(new FileReader(numberOfRunsFile));
             String numOfRuns = null;
 
             numOfRuns = reader.readLine();
             int num = Integer.parseInt(numOfRuns);
-
             Logger.setRunCounter(num);
             reader.close();
 
+            FileWriter fileWriter = new FileWriter(numberOfRunsFile);
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+            printWriter.println(++num);
+            fileWriter.close();
+
         } catch (FileNotFoundException e) {
             try {
-                Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("numberofruns.txt")));
-                writer.write(1);
+                FileWriter fileWriter = new FileWriter(numberOfRunsFile);
+                PrintWriter printWriter = new PrintWriter(fileWriter);
+                printWriter.println("1");
+                fileWriter.close();
+
                 Logger.setRunCounter(1);
-                writer.close();
+                fileWriter.close();
 
             } catch (FileNotFoundException e1) {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-            e.printStackTrace();
+            System.out.println("numberofruns.txt not found. Creating one.");
         } catch (IOException e) {
             e.printStackTrace();
         }
