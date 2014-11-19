@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by Adam on 2014.11.18..
  */
-public class Agent{
+public class Agent {
     private Field field;
     private RoundFinishedHandler roundHandler;
     private AgentFinishedRunning finishedHandler;
@@ -36,11 +36,11 @@ public class Agent{
         ID = IDcounter++;
     }
 
-    public void setField (Field field) {
+    public void setField(Field field) {
         this.field = field;
     }
 
-    public Pair<Field,Integer> run() {
+    public Pair<Field, Integer> run() {
 
         int numberOfStays = 0;
         while (numberOfStays < 4) {
@@ -61,15 +61,14 @@ public class Agent{
             for (int i = 0; i < 5; i++) {
                 if (values[i] == maxValue) {
                     maxIndexes.add(i);
-                }
-                else if (values[i] > maxValue) {
+                } else if (values[i] > maxValue) {
                     maxIndexes.clear();
                     maxIndexes.add(i);
                     maxValue = values[i];
                 }
             }
 
-            int maxIndex = maxIndexes.get((int)(Math.random()*maxIndexes.size()));
+            int maxIndex = maxIndexes.get((int) (Math.random() * maxIndexes.size()));
 
             switch (maxIndex) {
                 case 0:
@@ -102,6 +101,7 @@ public class Agent{
 
             stepCounter++;
             roundHandler.onAgentRoundFinished(this);
+
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -109,7 +109,7 @@ public class Agent{
             }
         }
         //finishedHandler.onAgentFinishedRunning(this,Application.fieldManager.getField(field.getX(), field.getY()).getValue(), stepCounter);
-        Pair<Field,Integer> v=new Pair<Field, Integer>(Application.fieldManager.getField(field.getX(), field.getY()),stepCounter);
+        Pair<Field, Integer> v = new Pair<Field, Integer>(Application.fieldManager.getField(field.getX(), field.getY()), stepCounter);
         return v;
     }
 
