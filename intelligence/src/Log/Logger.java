@@ -5,7 +5,9 @@ import field.Field;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by Attila on 2014.11.19..
@@ -14,7 +16,7 @@ public class Logger {
     // done
     private static Field globalOptimum;
     //done
-    private static ArrayList<Field> foundOptimums = new ArrayList<Field>();
+    private static HashMap<Field, Integer> foundOptimums = new HashMap<Field, Integer>();
     // done
     private static int numberOfBeams;
     // done
@@ -42,11 +44,11 @@ public class Logger {
         Logger.globalOptimum = globalOptimum;
     }
 
-    public static ArrayList<Field> getFoundOptimums() {
+    public static HashMap<Field, Integer> getFoundOptimums() {
         return foundOptimums;
     }
 
-    public static void setFoundOptimums(ArrayList<Field> foundOptimums) {
+    public static void setFoundOptimums(HashMap<Field, Integer> foundOptimums) {
         Logger.foundOptimums = foundOptimums;
     }
 
@@ -76,17 +78,28 @@ public class Logger {
             printWriter.println("Global optimum: " + globalOptimum);
 
             boolean globalFound = false;
-            for (int i = 0; i < foundOptimums.size(); i++) {
-                if (foundOptimums.get(i) == globalOptimum) {
+            Iterator it = foundOptimums.entrySet().iterator();
+            int globalOptimumStepCount = 0;
+            while(it.hasNext()) {
+                //Map.Entry pairs = (Map.Entry)it.next();
+                Map.Entry<Field, Integer> pairs = (Map.Entry<Field, Integer>)it.next();
+                if (pairs.getKey() == globalOptimum) {
                     globalFound = true;
+                    globalOptimumStepCount = pairs.getValue();
                 }
             }
-
             printWriter.println("Global optimum found: " + globalFound);
-            printWriter.println("All found optimums:");
-            for (int i = 0; i < foundOptimums.size(); i++) {
-                printWriter.println(foundOptimums.get(i));
+            if (globalFound) {
+                printWriter.println("Global optimum step count: " + globalOptimumStepCount);
             }
+
+            printWriter.println("All found optimums and step numbers:");
+            it = foundOptimums.entrySet().iterator();
+            while(it.hasNext()) {
+                Map.Entry<Field, Integer> pairs = (Map.Entry<Field, Integer>)it.next();
+                printWriter.println(pairs.getKey() + ", step count: " + pairs.getValue());
+            }
+
 
             printWriter.println("Total search time in nanos: " + searchTimeNano);
 

@@ -16,6 +16,7 @@ public class Agent extends Thread {
     private AgentFinishedRunning finishedHandler;
     private volatile boolean readyToRun;
     private static int IDcounter = 0;
+    private int stepCounter;
     private int ID;
 
     public Field getField() {
@@ -34,8 +35,8 @@ public class Agent extends Thread {
         this.finishedHandler = finishedHandler;
     }
 
-    public Agent()
-    {
+    public Agent() {
+        stepCounter = 0;
         ID = IDcounter++;
     }
 
@@ -112,10 +113,11 @@ public class Agent extends Thread {
                     break;
             }
 
+            stepCounter++;
             readyToRun = false;
             roundHandler.onAgentRoundFinished(this);
         }
-        finishedHandler.onAgentFinishedRunning(this,Application.fieldManager.getField(field.getX(), field.getY()).getValue());
+        finishedHandler.onAgentFinishedRunning(this,Application.fieldManager.getField(field.getX(), field.getY()).getValue(), stepCounter);
     }
 
 

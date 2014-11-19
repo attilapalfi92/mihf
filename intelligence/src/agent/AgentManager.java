@@ -68,13 +68,13 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
     }
 
     @Override
-    public void onAgentFinishedRunning(Agent agent, double foundValue) {
+    public void onAgentFinishedRunning(Agent agent, double foundValue, int stepCount) {
         synchronized (syncObject) {
             agents.remove(agent);
             agentNumber--;
             Field found = new Field(agent.getField().getX(), agent.getField().getY(), foundValue);
             foundValues.add(found);
-            Logger.getFoundOptimums().add(found);
+            Logger.getFoundOptimums().put(found, stepCount);
 
             if (agentNumber == 0) {
                 long totalRunTime = System.nanoTime() - startTimeNano;
