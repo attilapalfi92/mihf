@@ -2,6 +2,7 @@ package main;
 
 import Gui.Window;
 import Log.Logger;
+import Log.Statistics;
 import agent.AgentManager;
 import field.FieldManager;
 
@@ -12,36 +13,35 @@ public class Application {
     // 600x600 field size
     public static FieldManager fieldManager = new FieldManager(600);
 
-    public static boolean startNext = true;
-
     public static void cleanRun(int numberOfRuns, int numberOfAgents) {
+        Statistics stats = new Statistics(numberOfRuns, numberOfAgents);
         for (int i = 0; i < numberOfRuns; i++) {
+            Logger.reInitialize();
             fieldManager.generateField();
-            int numberOfBeams = numberOfAgents;
-            Logger.setNumberOfBeams(numberOfBeams);
-            AgentManager agentManager = new AgentManager(numberOfBeams, null);
+            Logger.setNumberOfBeams(numberOfAgents);
+            AgentManager agentManager = new AgentManager(numberOfAgents, null, stats);
             agentManager.startAgentSimulation();
         }
     }
 
     public static void runOnSame(int numberOfRuns, int numberOfAgents) {
-
+        Statistics stats = new Statistics(numberOfRuns, numberOfAgents);
         fieldManager.generateField();
         for (int i = 0; i < numberOfRuns; i++) {
-            int numberOfBeams = numberOfAgents;
-            Logger.setNumberOfBeams(numberOfBeams);
-            AgentManager agentManager = new AgentManager(numberOfBeams, null);
-            System.out.println("------------------ASD--------------------");
+            Logger.reInitialize();
+            Logger.setGlobalOptimum(fieldManager.getGlobalOptimum());
+            Logger.setNumberOfBeams(numberOfAgents);
+            AgentManager agentManager = new AgentManager(numberOfAgents, null, stats);
             agentManager.startAgentSimulation();
         }
     }
 
     public static void graphicalRun(int numberOfAgents) {
+        Statistics stats = new Statistics(1, numberOfAgents);
         fieldManager.generateField();
         Window window = new Window();
-        int numberOfBeams = numberOfAgents;
-        Logger.setNumberOfBeams(numberOfBeams);
-        AgentManager agentManager = new AgentManager(numberOfBeams, window.getPanel());
+        Logger.setNumberOfBeams(numberOfAgents);
+        AgentManager agentManager = new AgentManager(numberOfAgents, window.getPanel(), stats);
         agentManager.startAgentSimulation();
     }
 
@@ -82,8 +82,8 @@ public class Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        graphicalRun(10);
-        //runOnSame(2, 10);
+        //graphicalRun(10);
+        runOnSame(2, 10);
 
         /*fieldManager.generateField();
         Window window = new Window();

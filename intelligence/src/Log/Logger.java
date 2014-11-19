@@ -2,6 +2,7 @@ package Log;
 
 import field.Field;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,6 +24,24 @@ public class Logger {
     private static long searchTimeNano;
     // done
     private static int runCounter;
+
+    public static void reInitialize() {
+        globalOptimum = null;
+        foundOptimums = new HashMap<Field, Integer>();
+        searchTimeNano = 0;
+        runCounter++;
+
+        File numberOfRunsFile = new File("numberofruns.txt");
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter(numberOfRunsFile);
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+            printWriter.println(runCounter);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static int getRunCounter() {
         return runCounter;
@@ -68,7 +87,7 @@ public class Logger {
         Logger.searchTimeNano = searchTimeNano;
     }
 
-    public static void writeFile() {
+    public static void finalizeLogging(Statistics statistics) {
         String filename = new String("run_" + numberOfBeams + "_beams_and_number_" + runCounter + ".txt");
         try {
             FileWriter writer = new FileWriter(filename);
@@ -85,6 +104,8 @@ public class Logger {
                 if (pairs.getKey().getValue() == globalOptimum.getValue()) {
                     globalFound = true;
                     globalOptimumStepCount = pairs.getValue();
+                    statistics.getFoundGlobalOptimumSteps().add(globalOptimumStepCount);
+                    statistics.setGlobalOptimumValue(pairs.getKey().getValue());
                 }
             }
             printWriter.println("Global optimum found: " + globalFound);
@@ -97,6 +118,7 @@ public class Logger {
             while(it.hasNext()) {
                 Map.Entry<Field, Integer> pairs = (Map.Entry<Field, Integer>)it.next();
                 printWriter.println(pairs.getKey() + ", step count: " + pairs.getValue());
+                statistics.getFoundOptimumSteps().add(pairs.getValue());
             }
 
 

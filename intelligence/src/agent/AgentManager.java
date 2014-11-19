@@ -4,6 +4,7 @@ import Events.AgentFinishedRunning;
 import Events.GraphicHandler;
 import Events.RoundFinishedHandler;
 import Log.Logger;
+import Log.Statistics;
 import field.Field;
 import main.Application;
 
@@ -20,8 +21,9 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
     private int agentRoundsFinished;
     private  Object syncObject = new Object();
     private long startTimeNano;
+    private Statistics statistics;
 
-    public AgentManager (int K, GraphicHandler handler_)
+    public AgentManager (int K, GraphicHandler handler_, Statistics statistics)
     {
         handler = handler_;
         foundValues=new ArrayList<Field>();
@@ -29,6 +31,8 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
         agentNumber = K;
         agentRoundsFinished = 0;
         int fieldSize = Application.fieldManager.getFieldSize();
+        this.statistics = statistics;
+
 
         startTimeNano = System.nanoTime();
 
@@ -52,16 +56,20 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
         }
 
         while(true){
-            //synchronized (syncObject) {
             if(agents.size()>0){
-                if (agents.get(0).isAlive())
+                if (agents.get(0).isAlive()) {
                     try {
                         agents.get(0).join();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                else
+                }
+                else {
                     break;
+                }
+            }
+            else {
+                break;
             }
         }
     }
@@ -102,8 +110,7 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
             if (agentNumber == 0) {
                 long totalRunTime = System.nanoTime() - startTimeNano;
                 Logger.setSearchTimeNano(totalRunTime);
-                Logger.writeFile();
-                Application.startNext = true;
+                Logger.finalizeLogging(statistics);
                 System.out.println("Search finished!");
                 //System.exit(0);
             }
