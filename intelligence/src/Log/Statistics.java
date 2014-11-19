@@ -36,14 +36,14 @@ public class Statistics {
         for (int i = 0; i < foundGlobalOptimumSteps.size(); i++) {
             allStepsToGlobalOpt += foundGlobalOptimumSteps.get(i);
         }
+
         double averageStepsToGlobalOpt = 0;
         if(foundGlobalOptimumSteps.size() > 0) {
             averageStepsToGlobalOpt = ((double)allStepsToGlobalOpt) / foundGlobalOptimumSteps.size();
-            System.out.println("Average steps to find global optimums: " + "No global optimums found.");
+            System.out.println("Average steps to find global optimums: " + averageStepsToGlobalOpt);
         }
         else
-            System.out.println("Average steps to find global optimums: " + averageStepsToGlobalOpt);
-
+            System.out.println("Average steps to find global optimums: " + "No global optimums found.");
 
         int allStepsToOpt = 0;
         for (int i = 0; i < foundOptimumSteps.size(); i++) {
