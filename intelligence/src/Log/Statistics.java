@@ -49,7 +49,7 @@ public class Statistics {
         for (int i = 0; i < foundOptimumSteps.size(); i++) {
             allStepsToOpt += foundOptimumSteps.get(i);
         }
-        double averageStepsToOpt = ((double)allStepsToGlobalOpt) / foundOptimumSteps.size();
+        double averageStepsToOpt = ((double)allStepsToOpt) / foundOptimumSteps.size();
         System.out.println("Average steps to find optimums: " + averageStepsToOpt);
 
         double allValuesOfGlobalOpt = 0;
