@@ -14,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by Attila on 2014.11.18..
  */
-public class AgentManager{ //implements RoundFinishedHandler, AgentFinishedRunning{
+public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
     private ArrayList<Agent> agents;
     private ArrayList<Field> foundValues;
     private GraphicHandler handler;
@@ -31,8 +31,8 @@ public class AgentManager{ //implements RoundFinishedHandler, AgentFinishedRunni
         agentNumber = K;
         agentRoundsFinished = 0;
         this.statistics = statistics;
-
-
+        int fieldSize = Application.fieldManager.getFieldSize();
+        agents=new ArrayList<Agent>();
         startTimeNano = System.nanoTime();
 
         /*for(int i = 0; i < agentNumber; i++)
@@ -54,34 +54,24 @@ public class AgentManager{ //implements RoundFinishedHandler, AgentFinishedRunni
             int startposX = (int)(Math.random() * fieldSize);
             int startposY = (int)(Math.random() * fieldSize);
             temp.setField(new Field(startposX, startposY));
+            temp.setRoundHandler(this);
+            agents.add(temp);
             Pair<Field, Integer> optimum=temp.run();
+            foundValues.add(optimum.getKey());
+            agents.remove(temp);
             Logger.getFoundOptimums().put(optimum.getKey(), optimum.getValue());
         }
 
     }
 
-   /* // szerintem már jó, mutasd meg dorkának, ő majd code reviewolja
+    // szerintem már jó, mutasd meg dorkának, ő majd code reviewolja
     @Override
     public void onAgentRoundFinished(Agent agent) {
-        synchronized (syncObject)
-        {
-            // ha minden ágens befejezte a kört
-            if (++agentRoundsFinished >= agentNumber) {
-
-                // egyesével újraengedélyezzük őket
-                for(int i = 0; i < agentNumber; i++) {
-                    agents.get(i).setReadyToRun(true);
-                }
-
-                // majd kérünk egy kirajzolást
-                if(handler != null)
-                    handler.onRedraw(agents, foundValues);
-                else
-                    System.out.println(foundValues);
-
-                agentRoundsFinished = 0;
-            }
-        }
+                    // majd kérünk egy kirajzolást
+        if(handler != null)
+            handler.onRedraw(agents, foundValues);
+        else
+            System.out.println(foundValues);
     }
 
     @Override
@@ -101,5 +91,5 @@ public class AgentManager{ //implements RoundFinishedHandler, AgentFinishedRunni
                 //System.exit(0);
             }
         }
-    }*/
+    }
 }
