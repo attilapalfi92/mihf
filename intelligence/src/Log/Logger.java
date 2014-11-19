@@ -2,6 +2,9 @@ package Log;
 
 import field.Field;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -39,14 +42,6 @@ public class Logger {
         Logger.globalOptimum = globalOptimum;
     }
 
-    public static ArrayList<Field> getLocalOptimums() {
-        return localOptimums;
-    }
-
-    public static void setLocalOptimums(ArrayList<Field> localOptimums) {
-        Logger.localOptimums = localOptimums;
-    }
-
     public static ArrayList<Field> getFoundOptimums() {
         return foundOptimums;
     }
@@ -69,5 +64,35 @@ public class Logger {
 
     public static void setSearchTimeNano(long searchTimeNano) {
         Logger.searchTimeNano = searchTimeNano;
+    }
+
+    public static void writeFile() {
+        String filename = new String("run_" + numberOfBeams + "_beams_and_number_" + runCounter + ".txt");
+        try {
+            FileWriter writer = new FileWriter(filename);
+            PrintWriter printWriter = new PrintWriter(writer);
+            printWriter.println(numberOfBeams + " beams.");
+            printWriter.println("Run counter: " + runCounter);
+            printWriter.println("Global optimum: " + globalOptimum);
+
+            boolean globalFound = false;
+            for (int i = 0; i < foundOptimums.size(); i++) {
+                if (foundOptimums.get(i) == globalOptimum) {
+                    globalFound = true;
+                }
+            }
+
+            printWriter.println("Global optimum found: " + globalFound);
+            printWriter.println("All found optimums:");
+            for (int i = 0; i < foundOptimums.size(); i++) {
+                printWriter.println(foundOptimums.get(i));
+            }
+
+            printWriter.println("Total search time in nanos: " + searchTimeNano);
+
+            printWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

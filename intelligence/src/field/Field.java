@@ -56,4 +56,9 @@ public class Field {
     public double getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return new String("x = " + X + "\t" + "y = " + Y + "\t" + "value = " + value);
+    }
 }

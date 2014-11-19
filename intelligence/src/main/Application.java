@@ -24,12 +24,14 @@ public class Application {
             int num = Integer.parseInt(numOfRuns);
 
             Logger.setRunCounter(num);
+            reader.close();
 
         } catch (FileNotFoundException e) {
             try {
                 Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("numberofruns.txt")));
                 writer.write(1);
                 Logger.setRunCounter(1);
+                writer.close();
 
             } catch (FileNotFoundException e1) {
             } catch (IOException e1) {
