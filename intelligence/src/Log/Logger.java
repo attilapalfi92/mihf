@@ -81,9 +81,8 @@ public class Logger {
             Iterator it = foundOptimums.entrySet().iterator();
             int globalOptimumStepCount = 0;
             while(it.hasNext()) {
-                //Map.Entry pairs = (Map.Entry)it.next();
                 Map.Entry<Field, Integer> pairs = (Map.Entry<Field, Integer>)it.next();
-                if (pairs.getKey() == globalOptimum) {
+                if (pairs.getKey().getValue() == globalOptimum.getValue()) {
                     globalFound = true;
                     globalOptimumStepCount = pairs.getValue();
                 }

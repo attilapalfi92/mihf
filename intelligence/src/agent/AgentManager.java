@@ -81,6 +81,7 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
                 Logger.setSearchTimeNano(totalRunTime);
                 Logger.writeFile();
                 System.out.println("Search finished!");
+                //System.exit(0);
             }
         }
     }
