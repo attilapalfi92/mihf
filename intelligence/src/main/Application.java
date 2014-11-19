@@ -12,7 +12,42 @@ public class Application {
     // 600x600 field size
     public static FieldManager fieldManager = new FieldManager(600);
 
-    public static void main(String[] args ){
+    public static boolean startNext = true;
+
+    public static void cleanRun(int numberOfRuns, int numberOfAgents) {
+        for (int i = 0; i < numberOfRuns; i++) {
+            fieldManager.generateField();
+            int numberOfBeams = numberOfAgents;
+            Logger.setNumberOfBeams(numberOfBeams);
+            AgentManager agentManager = new AgentManager(numberOfBeams, null);
+            startNext = false;
+            while (!startNext) {
+
+            }
+        }
+    }
+
+    public static void runOnSame(int numberOfRuns, int numberOfAgents) {
+
+        fieldManager.generateField();
+        for (int i = 0; i < numberOfRuns; i++) {
+            int numberOfBeams = numberOfAgents;
+            Logger.setNumberOfBeams(numberOfBeams);
+            AgentManager agentManager = new AgentManager(numberOfBeams, null);
+            System.out.println("------------------ASD--------------------");
+        }
+    }
+
+    public static void graphicalRun(int numberOfAgents) {
+        fieldManager.generateField();
+        Window window = new Window();
+        int numberOfBeams = numberOfAgents;
+        Logger.setNumberOfBeams(numberOfBeams);
+        AgentManager agentManager = new AgentManager(numberOfBeams, window.getPanel());
+    }
+
+
+    public static void main(String[] args) {
         File numberOfRunsFile = new File("numberofruns.txt");
         BufferedReader reader = null;
 
@@ -48,12 +83,13 @@ public class Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        fieldManager.generateField();
+        //graphicalRun(50);
+        runOnSame(2, 10);
+        /*fieldManager.generateField();
         Window window = new Window();
-        int numberOfBeams = 10;
+        int numberOfBeams = 50;
         Logger.setNumberOfBeams(numberOfBeams);
-        AgentManager agentManager = new AgentManager(numberOfBeams, window.getPanel());
+        AgentManager agentManager = new AgentManager(numberOfBeams, window.getPanel());*/
     }
 
 }

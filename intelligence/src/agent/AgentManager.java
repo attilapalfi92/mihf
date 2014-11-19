@@ -18,7 +18,7 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
     private GraphicHandler handler;
     private int agentNumber;
     private int agentRoundsFinished;
-    private static Object syncObject = new Object();
+    private Object syncObject = new Object();
     private long startTimeNano;
 
     public AgentManager (int K, GraphicHandler handler_)
@@ -60,7 +60,10 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
                 }
 
                 // majd kérünk egy kirajzolást
-                handler.onRedraw(agents, foundValues);
+                if(handler != null)
+                    handler.onRedraw(agents, foundValues);
+                else
+                    System.out.println(foundValues);
 
                 agentRoundsFinished = 0;
             }
@@ -80,6 +83,7 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
                 long totalRunTime = System.nanoTime() - startTimeNano;
                 Logger.setSearchTimeNano(totalRunTime);
                 Logger.writeFile();
+                Application.startNext = true;
                 System.out.println("Search finished!");
                 //System.exit(0);
             }
