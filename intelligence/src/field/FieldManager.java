@@ -1,6 +1,9 @@
 package field;
 
 
+import Log.Logger;
+import main.Application;
+
 /**
  * Created by Attila on 2014.11.18..
  */
@@ -8,6 +11,7 @@ public class FieldManager {
     // change pls
     private Field[][] field;
     private int fieldSize;
+    private Field globalOptimum;
 
     public FieldManager(int fieldSize) {
         this.fieldSize = fieldSize;
@@ -43,8 +47,19 @@ public class FieldManager {
             }
         }
 
-        float debugppoint = 0;
-        debugppoint++;
+        double absoluteMaxVal = 0;
+        globalOptimum = null;
+        for (int i = 0; i < fieldSize; i++) {
+            for (int j = 0; j < fieldSize; j++) {
+                double val = Application.fieldManager.getField(i, j).getValue();
+                if (val > absoluteMaxVal) {
+                    absoluteMaxVal = val;
+                    globalOptimum = new Field(i, j, absoluteMaxVal);
+                }
+            }
+        }
+
+        Logger.setGlobalOptimum(globalOptimum);
     }
 
     public int getFieldSize() {
@@ -58,5 +73,9 @@ public class FieldManager {
         else
             //bit of patchwork munka, ha tudunk ennél jobbat akkor mehet, exceptionre megállna a tömb feltöltése
             return new Field(0,0,0);
+    }
+
+    public Field getGlobalOptimum() {
+        return globalOptimum;
     }
 }

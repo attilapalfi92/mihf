@@ -50,7 +50,6 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
         {
             agents.get(i).start();
         }
-        //todo block the main thread
 
         while(true){
             //synchronized (syncObject) {

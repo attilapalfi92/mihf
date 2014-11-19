@@ -42,6 +42,7 @@ public class Application {
         int numberOfBeams = numberOfAgents;
         Logger.setNumberOfBeams(numberOfBeams);
         AgentManager agentManager = new AgentManager(numberOfBeams, window.getPanel());
+        agentManager.startAgentSimulation();
     }
 
 
@@ -81,8 +82,9 @@ public class Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //graphicalRun(50);
-        runOnSame(2, 10);
+        graphicalRun(10);
+        //runOnSame(2, 10);
+
         /*fieldManager.generateField();
         Window window = new Window();
         int numberOfBeams = 50;

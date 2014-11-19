@@ -1,7 +1,6 @@
 package Gui;
 
 import Events.GraphicHandler;
-import Log.Logger;
 import agent.Agent;
 import field.Field;
 import main.Application;
@@ -30,20 +29,6 @@ public class Panel extends JPanel implements GraphicHandler {
     }
 
     public void recalculateFieldColors(){
-        double absoluteMaxVal = 0;
-        Field absoluteMaxField = null;
-        for (int i = 0; i < resolution; i++) {
-            for (int j = 0; j < resolution; j++) {
-                double val = Application.fieldManager.getField(i, j).getValue();
-                if (val > absoluteMaxVal) {
-                    absoluteMaxVal = val;
-                    absoluteMaxField = new Field(i, j, absoluteMaxVal);
-                }
-            }
-        }
-
-        Logger.setGlobalOptimum(absoluteMaxField);
-
         int pointsPerPixel = resolution / pixelCount;
         for(int x = 0; x < pixelCount; x++) {
             for (int y = 0; y < pixelCount; y++) {
@@ -61,7 +46,7 @@ public class Panel extends JPanel implements GraphicHandler {
 
                 value = maxVal;
                 // convert the value between 0 and 100
-                value = (value / absoluteMaxVal) * 100;
+                value = (value / Application.fieldManager.getGlobalOptimum().getValue()) * 100;
 
                 Color pixelColor;
                 if (value < 25) {
