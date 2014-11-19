@@ -42,7 +42,27 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning{
             temp.setFinishedHandler(this);
             temp.setReadyToRun(true);
             agents.add(temp);
-            temp.start();
+        }
+    }
+
+    public void startAgentSimulation(){
+        for(int i = 0; i < agentNumber; i++)
+        {
+            agents.get(i).start();
+        }
+        //todo block the main thread
+
+        while(true){
+            synchronized (syncObject) {
+                if (agents.get(0).isAlive())
+                    try {
+                        agents.get(0).join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                else
+                    break;
+            }
         }
     }
 
