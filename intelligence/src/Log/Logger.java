@@ -88,13 +88,13 @@ public class Logger {
     }
 
     public static void finalizeLogging(Statistics statistics) {
-        String filename = new String("run_" + numberOfBeams + "_beams_and_number_" + runCounter + ".txt");
-        try {
-            FileWriter writer = new FileWriter(filename);
-            PrintWriter printWriter = new PrintWriter(writer);
-            printWriter.println(numberOfBeams + " beams.");
-            printWriter.println("Run counter: " + runCounter);
-            printWriter.println("Global optimum: " + globalOptimum);
+        //String filename = new String("run_" + numberOfBeams + "_beams_and_number_" + runCounter + ".txt");
+        //try {
+            //FileWriter writer = new FileWriter(filename);
+            //PrintWriter printWriter = new PrintWriter(writer);
+            //printWriter.println(numberOfBeams + " beams.");
+            //printWriter.println("Run counter: " + runCounter);
+            //printWriter.println("Global optimum: " + globalOptimum);
 
             boolean globalFound = false;
             Iterator it = foundOptimums.entrySet().iterator();
@@ -108,28 +108,28 @@ public class Logger {
                     statistics.getFoundGlobalOptimumValues().add(pairs.getKey().getValue());
                 }
             }
-            printWriter.println("Global optimum found: " + globalFound);
+            //printWriter.println("Global optimum found: " + globalFound);
             if (globalFound) {
-                printWriter.println("Global optimum step count: " + globalOptimumStepCount);
+                //printWriter.println("Global optimum step count: " + globalOptimumStepCount);
             }
 
-            printWriter.println("All found optimums and step numbers:");
+            //printWriter.println("All found optimums and step numbers:");
             it = foundOptimums.entrySet().iterator();
             while(it.hasNext()) {
                 Map.Entry<Field, Integer> pairs = (Map.Entry<Field, Integer>)it.next();
-                printWriter.println(pairs.getKey() + ", step count: " + pairs.getValue());
+                //printWriter.println(pairs.getKey() + ", step count: " + pairs.getValue());
                 statistics.getFoundOptimumSteps().add(pairs.getValue());
                 statistics.getFoundOptimumValues().add(pairs.getKey().getValue());
             }
 
 
-            printWriter.println("Total search time in nanos: " + searchTimeNano);
-            printWriter.close();
+            //printWriter.println("Total search time in nanos: " + searchTimeNano);
+            //printWriter.close();
 
 //            statistics.createStatistics();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //} catch (IOException e) {
+            //e.printStackTrace();
+        //}
     }
 }

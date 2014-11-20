@@ -89,7 +89,7 @@ public class Application {
             e.printStackTrace();
         }
         //graphicalRun(10);
-        runOnSame(2, 10);
+        runOnSame(100, 10);
 
         /*fieldManager.generateField();
         Window window = new Window();

@@ -102,11 +102,13 @@ public class Agent {
             stepCounter++;
             roundHandler.onAgentRoundFinished(this);
 
+            /*
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            */
         }
         //finishedHandler.onAgentFinishedRunning(this,Application.fieldManager.getField(field.getX(), field.getY()).getValue(), stepCounter);
         Pair<Field, Integer> v = new Pair<Field, Integer>(Application.fieldManager.getField(field.getX(), field.getY()), stepCounter);
