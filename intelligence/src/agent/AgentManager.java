@@ -69,8 +69,6 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning 
         // majd kérünk egy kirajzolást
         if (handler != null)
             handler.onRedraw(agents, foundValues);
-        else
-            System.out.println(foundValues);
     }
 
     @Override

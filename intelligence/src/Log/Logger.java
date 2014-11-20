@@ -95,7 +95,7 @@ public class Logger {
             //printWriter.println(numberOfBeams + " beams.");
             //printWriter.println("Run counter: " + runCounter);
             //printWriter.println("Global optimum: " + globalOptimum);
-
+            statistics.getRunTimeValues().add(searchTimeNano);
             boolean globalFound = false;
             Iterator it = foundOptimums.entrySet().iterator();
             int globalOptimumStepCount = 0;

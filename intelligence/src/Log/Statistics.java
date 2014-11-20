@@ -23,6 +23,8 @@ public class Statistics {
 
     private ArrayList<Double> realGlobalOptimumValues = new ArrayList<Double>();
 
+    private ArrayList<Long> runTimeValues = new ArrayList<Long>();
+
     public Statistics(int runNumber, int beamNumber) {
         this.runNumber = runNumber;
         this.beamNumber = beamNumber;
@@ -78,6 +80,13 @@ public class Statistics {
         }
         double averageOptimumRealGlobalOptimumValues = allValuesOfRealGlobalOpt / realGlobalOptimumValues.size();
         System.out.println("Average values of real global optimums: " + averageOptimumRealGlobalOptimumValues);
+
+        long allRunTimeValues = 0;
+        for (int i = 0; i < runTimeValues.size(); i++)
+            allRunTimeValues += runTimeValues.get(i);
+
+        double averageRunTimeValues = (double)allRunTimeValues / runTimeValues.size();
+        System.out.println("Average values of run times: " + averageRunTimeValues);
     }
 
     public ArrayList<Double> getFoundGlobalOptimumValues() {
@@ -114,5 +123,9 @@ public class Statistics {
 
     public ArrayList<Double> getRealGlobalOptimumValues() {
         return realGlobalOptimumValues;
+    }
+
+    public ArrayList<Long> getRunTimeValues() {
+        return runTimeValues;
     }
 }
