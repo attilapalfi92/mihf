@@ -126,7 +126,7 @@ public class Logger {
             printWriter.println("Total search time in nanos: " + searchTimeNano);
             printWriter.close();
 
-            statistics.createStatistics();
+//            statistics.createStatistics();
 
         } catch (IOException e) {
             e.printStackTrace();
