@@ -21,6 +21,8 @@ public class Statistics {
     // each time a beam finds a global optimum, it's value must be added to this list
     private ArrayList<Double> foundGlobalOptimumValues = new ArrayList<Double>();
 
+    private ArrayList<Double> realGlobalOptimumValues = new ArrayList<Double>();
+
     public Statistics(int runNumber, int beamNumber) {
         this.runNumber = runNumber;
         this.beamNumber = beamNumber;
@@ -36,7 +38,6 @@ public class Statistics {
         for (int i = 0; i < foundGlobalOptimumSteps.size(); i++) {
             allStepsToGlobalOpt += foundGlobalOptimumSteps.get(i);
         }
-
         double averageStepsToGlobalOpt = 0;
         if(foundGlobalOptimumSteps.size() > 0) {
             averageStepsToGlobalOpt = ((double)allStepsToGlobalOpt) / foundGlobalOptimumSteps.size();
@@ -56,8 +57,12 @@ public class Statistics {
         for (int i = 0; i < foundGlobalOptimumValues.size(); i++) {
             allValuesOfGlobalOpt += foundGlobalOptimumValues.get(i);
         }
-        double averageGlobalOptimumValues = allValuesOfGlobalOpt / foundGlobalOptimumValues.size();
-        System.out.println("Average values of found global optimums: " + averageGlobalOptimumValues);
+        if (foundGlobalOptimumValues.size() > 0) {
+            double averageGlobalOptimumValues = allValuesOfGlobalOpt / foundGlobalOptimumValues.size();
+            System.out.println("Average values of found global optimums: " + averageGlobalOptimumValues);
+        }
+        else
+            System.out.println("Average values of found global optimums: " + "No global optimums found.");
 
         double allValuesOfOpt = 0;
         for (int i = 0; i < foundOptimumValues.size(); i++) {
@@ -66,6 +71,13 @@ public class Statistics {
         double averageOptimumValues = allValuesOfOpt / foundOptimumValues.size();
         System.out.println("Average values of found optimums: " + averageOptimumValues);
 
+
+        double allValuesOfRealGlobalOpt = 0;
+        for (int i = 0; i < realGlobalOptimumValues.size(); i++) {
+            allValuesOfRealGlobalOpt += realGlobalOptimumValues.get(i);
+        }
+        double averageOptimumRealGlobalOptimumValues = allValuesOfRealGlobalOpt / realGlobalOptimumValues.size();
+        System.out.println("Average values of real global optimums: " + averageOptimumRealGlobalOptimumValues);
     }
 
     public ArrayList<Double> getFoundGlobalOptimumValues() {
@@ -98,5 +110,9 @@ public class Statistics {
 
     public ArrayList<Double> getFoundOptimumValues() {
         return foundOptimumValues;
+    }
+
+    public ArrayList<Double> getRealGlobalOptimumValues() {
+        return realGlobalOptimumValues;
     }
 }

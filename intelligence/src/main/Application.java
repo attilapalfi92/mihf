@@ -18,15 +18,18 @@ public class Application {
         for (int i = 0; i < numberOfRuns; i++) {
             Logger.reInitialize();
             fieldManager.generateField();
+            stats.getRealGlobalOptimumValues().add(fieldManager.getGlobalOptimum().getValue());
             Logger.setNumberOfBeams(numberOfAgents);
             AgentManager agentManager = new AgentManager(numberOfAgents, null, stats);
             agentManager.startAgentSimulation();
         }
+        stats.createStatistics();
     }
 
     public static void runOnSame(int numberOfRuns, int numberOfAgents) {
         Statistics stats = new Statistics(numberOfRuns, numberOfAgents);
         fieldManager.generateField();
+        stats.getRealGlobalOptimumValues().add(fieldManager.getGlobalOptimum().getValue());
         for (int i = 0; i < numberOfRuns; i++) {
             Logger.reInitialize();
             Logger.setGlobalOptimum(fieldManager.getGlobalOptimum());
@@ -34,15 +37,18 @@ public class Application {
             AgentManager agentManager = new AgentManager(numberOfAgents, null, stats);
             agentManager.startAgentSimulation();
         }
+        stats.createStatistics();
     }
 
     public static void graphicalRun(int numberOfAgents) {
         Statistics stats = new Statistics(1, numberOfAgents);
         fieldManager.generateField();
+        stats.getRealGlobalOptimumValues().add(fieldManager.getGlobalOptimum().getValue());
         Window window = new Window();
         Logger.setNumberOfBeams(numberOfAgents);
         AgentManager agentManager = new AgentManager(numberOfAgents, window.getPanel(), stats);
         agentManager.startAgentSimulation();
+        stats.createStatistics();
     }
 
 
