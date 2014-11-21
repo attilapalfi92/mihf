@@ -87,7 +87,7 @@ public class Application {
             e.printStackTrace();
         }*/
         //graphicalRun(10);
-        fieldManager.generateField();
+        fieldManager.generateField(-1200);
         runOnSame(1000, 1);
         runOnSame(1000, 5);
         runOnSame(1000, 10);
