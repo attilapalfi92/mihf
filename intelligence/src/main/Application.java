@@ -44,6 +44,7 @@ public class Application {
         stats.getRealGlobalOptimumValues().add(fieldManager.getGlobalOptimum().getValue());
         Window window = new Window();
         Logger.setNumberOfBeams(numberOfAgents);
+        Logger.setGlobalOptimum(fieldManager.getGlobalOptimum());
         AgentManager agentManager = new AgentManager(numberOfAgents, window.getPanel(), stats);
         agentManager.startAgentSimulation();
         stats.createStatistics();
@@ -87,13 +88,20 @@ public class Application {
             e.printStackTrace();
         }*/
         //graphicalRun(10);
-        fieldManager.generateField(-200);
+        fieldManager.generateField(-1200);
+        //runOnSame(2, 2);
         runOnSame(100, 1);
+        Logger.reInitialize();
         runOnSame(100, 5);
+        Logger.reInitialize();
         runOnSame(100, 10);
+        Logger.reInitialize();
         runOnSame(100, 25);
+        Logger.reInitialize();
         runOnSame(100, 50);
+        Logger.reInitialize();
         runOnSame(100, 100);
+        Logger.reInitialize();
         graphicalRun(100);
         /*
         Window window = new Window();

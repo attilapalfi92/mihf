@@ -3,10 +3,6 @@ package Log;
 import field.Field;
 import javafx.util.Pair;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -28,10 +24,15 @@ public class Logger {
 
     public static void reInitialize() {
         globalOptimum = null;
+        foundOptimums2 = new ArrayList<Pair<Field, Integer>>();
+        numberOfBeams = 0;
+        searchTimesNano = new ArrayList<Long>();
+
         //foundOptimums = new HashMap<Field, Integer>();
         //searchTimeNano = 0;
         runCounter++;
 
+        /*
         File numberOfRunsFile = new File("numberofruns.txt");
         FileWriter fileWriter = null;
         try {
@@ -42,6 +43,7 @@ public class Logger {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
     }
 
     public static ArrayList<Long> getSearchTimesNano() {
@@ -125,10 +127,11 @@ public class Logger {
                 }
             }
         }
-        if(minimumOptimumStep2 < 10000)
+        if (minimumOptimumStep2 < 10000)
             statistics.getFoundGlobalOptimumMinimumSteps().add(minimumOptimumStep2);
 
-
+        if (globalFound2)
+            statistics.setGlobalOptimumFoundCounter(statistics.getGlobalOptimumFoundCounter() + 1);
 
 
         /*boolean globalFound = false;

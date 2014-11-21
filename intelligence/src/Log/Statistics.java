@@ -15,7 +15,7 @@ public class Statistics {
     // each time a beam finds the global optimum, it's step number must be added to this list
     private ArrayList<Integer> foundGlobalOptimumSteps = new ArrayList<Integer>();
 
-    private ArrayList<Integer> foundGlobalOptimumMinimumSteps=new ArrayList<Integer>();
+    private ArrayList<Integer> foundGlobalOptimumMinimumSteps = new ArrayList<Integer>();
 
     // each time a beam finds an optimum, it's value must be added to this list
     private ArrayList<Double> foundOptimumValues = new ArrayList<Double>();
@@ -27,13 +27,17 @@ public class Statistics {
 
     private ArrayList<Long> runTimeValues = new ArrayList<Long>();
 
+    private int globalOptimumFoundCounter;
+
     public Statistics(int runNumber, int beamNumber) {
         this.runNumber = runNumber;
         this.beamNumber = beamNumber;
+        globalOptimumFoundCounter = 0;
     }
 
     public void createStatistics() {
-        float globalOptimumFindRate = ((float)foundGlobalOptimumSteps.size()) / runNumber;
+        //float globalOptimumFindRate = ((float)foundGlobalOptimumSteps.size()) / runNumber;
+        float globalOptimumFindRate = ((float)globalOptimumFoundCounter) / runNumber;
         System.out.println("Number of beams: " + beamNumber);
         System.out.println("Number of searches: " + runNumber);
         System.out.println("Rate of finding global optimums: " + globalOptimumFindRate);
@@ -146,5 +150,13 @@ public class Statistics {
 
     public ArrayList<Long> getRunTimeValues() {
         return runTimeValues;
+    }
+
+    public int getGlobalOptimumFoundCounter() {
+        return globalOptimumFoundCounter;
+    }
+
+    public void setGlobalOptimumFoundCounter(int globalOptimumFoundCounter) {
+        this.globalOptimumFoundCounter = globalOptimumFoundCounter;
     }
 }
