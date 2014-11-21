@@ -15,6 +15,8 @@ public class Statistics {
     // each time a beam finds the global optimum, it's step number must be added to this list
     private ArrayList<Integer> foundGlobalOptimumSteps = new ArrayList<Integer>();
 
+    private ArrayList<Integer> foundGlobalOptimumMinimumSteps=new ArrayList<Integer>();
+
     // each time a beam finds an optimum, it's value must be added to this list
     private ArrayList<Double> foundOptimumValues = new ArrayList<Double>();
 
@@ -51,6 +53,16 @@ public class Statistics {
         }
         else
             System.out.println("Average steps to find global optimums: " + "No global optimums found.");
+
+        double allMinimumStepsToGlobalOpt = 0;
+        for(int i=0; i<foundGlobalOptimumMinimumSteps.size();i++){
+            allMinimumStepsToGlobalOpt+=foundGlobalOptimumMinimumSteps.get(i);
+        }
+        double averageMinimumStepsToGlobalOpt = 0;
+        if(foundGlobalOptimumMinimumSteps.size() > 0){
+            averageMinimumStepsToGlobalOpt = allMinimumStepsToGlobalOpt / foundGlobalOptimumMinimumSteps.size();
+            System.out.println("Average minimum steps to find global optimums: " + averageMinimumStepsToGlobalOpt);
+        }
 
         int allStepsToOpt = 0;
         for (int i = 0; i < foundOptimumSteps.size(); i++) {
@@ -120,6 +132,8 @@ public class Statistics {
     public ArrayList<Integer> getFoundGlobalOptimumSteps() {
         return foundGlobalOptimumSteps;
     }
+
+    public ArrayList<Integer> getFoundGlobalOptimumMinimumSteps() { return foundGlobalOptimumMinimumSteps; }
 
     public ArrayList<Double> getFoundOptimumValues() {
         return foundOptimumValues;

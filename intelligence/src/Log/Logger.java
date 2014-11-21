@@ -99,6 +99,7 @@ public class Logger {
             boolean globalFound = false;
             Iterator it = foundOptimums.entrySet().iterator();
             int globalOptimumStepCount = 0;
+            int minimumOptimumStep = 10000;
             while(it.hasNext()) {
                 Map.Entry<Field, Integer> pairs = (Map.Entry<Field, Integer>)it.next();
                 if (pairs.getKey().getValue() == globalOptimum.getValue()) {
@@ -106,8 +107,14 @@ public class Logger {
                     globalOptimumStepCount = pairs.getValue();
                     statistics.getFoundGlobalOptimumSteps().add(globalOptimumStepCount);
                     statistics.getFoundGlobalOptimumValues().add(pairs.getKey().getValue());
+                    if(globalOptimumStepCount < minimumOptimumStep){
+                        minimumOptimumStep = globalOptimumStepCount;
+                    }
                 }
             }
+            if(minimumOptimumStep < 10000)
+                statistics.getFoundGlobalOptimumMinimumSteps().add(minimumOptimumStep);
+
             //printWriter.println("Global optimum found: " + globalFound);
             if (globalFound) {
                 //printWriter.println("Global optimum step count: " + globalOptimumStepCount);
