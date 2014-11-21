@@ -28,7 +28,6 @@ public class Application {
 
     public static void runOnSame(int numberOfRuns, int numberOfAgents) {
         Statistics stats = new Statistics(numberOfRuns, numberOfAgents);
-        fieldManager.generateField();
         stats.getRealGlobalOptimumValues().add(fieldManager.getGlobalOptimum().getValue());
         for (int i = 0; i < numberOfRuns; i++) {
             Logger.reInitialize();
@@ -42,7 +41,6 @@ public class Application {
 
     public static void graphicalRun(int numberOfAgents) {
         Statistics stats = new Statistics(1, numberOfAgents);
-        fieldManager.generateField();
         stats.getRealGlobalOptimumValues().add(fieldManager.getGlobalOptimum().getValue());
         Window window = new Window();
         Logger.setNumberOfBeams(numberOfAgents);
@@ -56,7 +54,7 @@ public class Application {
         File numberOfRunsFile = new File("numberofruns.txt");
         BufferedReader reader = null;
 
-        try {
+        /*try {
             reader = new BufferedReader(new FileReader(numberOfRunsFile));
             String numOfRuns = null;
 
@@ -87,11 +85,17 @@ public class Application {
             System.out.println("numberofruns.txt not found. Creating one.");
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
         //graphicalRun(10);
-        runOnSame(100, 10);
-
-        /*fieldManager.generateField();
+        fieldManager.generateField();
+        runOnSame(1000, 1);
+        runOnSame(1000, 5);
+        runOnSame(1000, 10);
+        runOnSame(1000, 25);
+        runOnSame(1000, 50);
+        runOnSame(1000, 100);
+        graphicalRun(100);
+        /*
         Window window = new Window();
         int numberOfBeams = 50;
         Logger.setNumberOfBeams(numberOfBeams);

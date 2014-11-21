@@ -40,7 +40,7 @@ public class FieldManager {
                 double z = 0;
                 for (int i = 0; i < numberOfSamples; i++) {
                     //TODO: check hy és hx, mert lehet nem ezeknek kéne lenniük
-                    z = z + 10 * (1 + m[i]) * Math.exp(-800 * (Math.pow(((double)x / fieldSize) - hx[i], 2) + Math.pow(((double)y / fieldSize) - hy[i], 2)));
+                    z = z + 10 * (1 + m[i]) * Math.exp(-200 * (Math.pow(((double)x / fieldSize) - hx[i], 2) + Math.pow(((double)y / fieldSize) - hy[i], 2)));
                 }
                 field[x][y] = new Field(x, y, z);
                 //current += delta;

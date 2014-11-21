@@ -60,7 +60,7 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning 
         long totalRunTime = System.nanoTime() - startTimeNano;
         Logger.setSearchTimeNano(totalRunTime);
         Logger.finalizeLogging(statistics);
-        System.out.println("Search finished!");
+        //System.out.println("Search finished!");
     }
 
     // szerintem már jó, mutasd meg dorkának, ő majd code reviewolja

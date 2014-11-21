@@ -37,13 +37,17 @@ public class Statistics {
         System.out.println("Rate of finding global optimums: " + globalOptimumFindRate);
 
         int allStepsToGlobalOpt = 0;
+        int minStepsToGlobalOpt = 10000;
         for (int i = 0; i < foundGlobalOptimumSteps.size(); i++) {
+            if(foundGlobalOptimumSteps.get(i) < minStepsToGlobalOpt)
+                minStepsToGlobalOpt=foundGlobalOptimumSteps.get(i);
             allStepsToGlobalOpt += foundGlobalOptimumSteps.get(i);
         }
         double averageStepsToGlobalOpt = 0;
         if(foundGlobalOptimumSteps.size() > 0) {
             averageStepsToGlobalOpt = ((double)allStepsToGlobalOpt) / foundGlobalOptimumSteps.size();
             System.out.println("Average steps to find global optimums: " + averageStepsToGlobalOpt);
+            System.out.println("Minimum steps to find global optimum: " + minStepsToGlobalOpt);
         }
         else
             System.out.println("Average steps to find global optimums: " + "No global optimums found.");
