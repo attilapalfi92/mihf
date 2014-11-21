@@ -17,7 +17,7 @@ public class Application {
         Statistics stats = new Statistics(numberOfRuns, numberOfAgents);
         for (int i = 0; i < numberOfRuns; i++) {
             Logger.reInitialize();
-            fieldManager.generateField();
+            fieldManager.generateField(-800);
             stats.getRealGlobalOptimumValues().add(fieldManager.getGlobalOptimum().getValue());
             Logger.setNumberOfBeams(numberOfAgents);
             AgentManager agentManager = new AgentManager(numberOfAgents, null, stats);
