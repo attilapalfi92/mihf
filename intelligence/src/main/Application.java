@@ -87,13 +87,13 @@ public class Application {
             e.printStackTrace();
         }*/
         //graphicalRun(10);
-        fieldManager.generateField(-1200);
-        runOnSame(1000, 1);
-        runOnSame(1000, 5);
-        runOnSame(1000, 10);
-        runOnSame(1000, 25);
-        runOnSame(1000, 50);
-        runOnSame(1000, 100);
+        fieldManager.generateField(-200);
+        runOnSame(100, 1);
+        runOnSame(100, 5);
+        runOnSame(100, 10);
+        runOnSame(100, 25);
+        runOnSame(100, 50);
+        runOnSame(100, 100);
         graphicalRun(100);
         /*
         Window window = new Window();
