@@ -1,14 +1,13 @@
 package Log;
 
 import field.Field;
+import javafx.util.Pair;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.ArrayList;
 
 /**
  * Created by Attila on 2014.11.19..
@@ -17,18 +16,20 @@ public class Logger {
     // done
     private static Field globalOptimum;
     //done
-    private static HashMap<Field, Integer> foundOptimums = new HashMap<Field, Integer>();
+    //private static HashMap<Field, Integer> foundOptimums = new HashMap<Field, Integer>();
+    private static ArrayList<Pair<Field, Integer>> foundOptimums2 = new ArrayList<Pair<Field, Integer>>();
     // done
     private static int numberOfBeams;
     // done
-    private static long searchTimeNano;
+    //private static long searchTimeNano;
+    private static ArrayList<Long> searchTimesNano = new ArrayList<Long>();
     // done
     private static int runCounter;
 
     public static void reInitialize() {
         globalOptimum = null;
-        foundOptimums = new HashMap<Field, Integer>();
-        searchTimeNano = 0;
+        //foundOptimums = new HashMap<Field, Integer>();
+        //searchTimeNano = 0;
         runCounter++;
 
         File numberOfRunsFile = new File("numberofruns.txt");
@@ -41,6 +42,10 @@ public class Logger {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static ArrayList<Long> getSearchTimesNano() {
+        return searchTimesNano;
     }
 
     public static int getRunCounter() {
@@ -63,13 +68,13 @@ public class Logger {
         Logger.globalOptimum = globalOptimum;
     }
 
-    public static HashMap<Field, Integer> getFoundOptimums() {
+    /*public static HashMap<Field, Integer> getFoundOptimums() {
         return foundOptimums;
-    }
+    }*/
 
-    public static void setFoundOptimums(HashMap<Field, Integer> foundOptimums) {
+    /*public static void setFoundOptimums(HashMap<Field, Integer> foundOptimums) {
         Logger.foundOptimums = foundOptimums;
-    }
+    }*/
 
     public static int getNumberOfBeams() {
         return numberOfBeams;
@@ -79,64 +84,88 @@ public class Logger {
         Logger.numberOfBeams = numberOfBeams;
     }
 
-    public static long getSearchTimeNano() {
+    /*public static long getSearchTimeNano() {
         return searchTimeNano;
     }
 
     public static void setSearchTimeNano(long searchTimeNano) {
         Logger.searchTimeNano = searchTimeNano;
+    }*/
+
+    public static ArrayList<Pair<Field, Integer>> getFoundOptimums2() {
+        return foundOptimums2;
+    }
+
+    public static void setFoundOptimums2(ArrayList<Pair<Field, Integer>> foundOptimums2) {
+        Logger.foundOptimums2 = foundOptimums2;
     }
 
     public static void finalizeLogging(Statistics statistics) {
-        //String filename = new String("run_" + numberOfBeams + "_beams_and_number_" + runCounter + ".txt");
-        //try {
-            //FileWriter writer = new FileWriter(filename);
-            //PrintWriter printWriter = new PrintWriter(writer);
-            //printWriter.println(numberOfBeams + " beams.");
-            //printWriter.println("Run counter: " + runCounter);
-            //printWriter.println("Global optimum: " + globalOptimum);
-            statistics.getRunTimeValues().add(searchTimeNano);
-            boolean globalFound = false;
-            Iterator it = foundOptimums.entrySet().iterator();
-            int globalOptimumStepCount = 0;
-            int minimumOptimumStep = 10000;
-            while(it.hasNext()) {
-                Map.Entry<Field, Integer> pairs = (Map.Entry<Field, Integer>)it.next();
-                if (pairs.getKey().getValue() == globalOptimum.getValue()) {
-                    globalFound = true;
-                    globalOptimumStepCount = pairs.getValue();
-                    statistics.getFoundGlobalOptimumSteps().add(globalOptimumStepCount);
-                    statistics.getFoundGlobalOptimumValues().add(pairs.getKey().getValue());
-                    if(globalOptimumStepCount < minimumOptimumStep){
-                        minimumOptimumStep = globalOptimumStepCount;
-                    }
+
+        //statistics.getRunTimeValues().add(searchTimeNano);
+        long maxTime = 0;
+        for (int i = 0; i < searchTimesNano.size(); i++) {
+            if (searchTimesNano.get(i) > maxTime)
+                maxTime = searchTimesNano.get(i);
+        }
+        statistics.getRunTimeValues().add(maxTime);
+
+        boolean globalFound2 = false;
+        int globalOptimumStepCount2 = 0;
+        int minimumOptimumStep2 = 10000;
+        for (int i = 0; i < foundOptimums2.size(); i++) {
+            if (foundOptimums2.get(i).getKey().getValue() == globalOptimum.getValue()) {
+                globalFound2 = true;
+                Pair<Field, Integer> pair = foundOptimums2.get(i);
+                globalOptimumStepCount2 = pair.getValue();
+                statistics.getFoundGlobalOptimumSteps().add(globalOptimumStepCount2);
+                statistics.getFoundGlobalOptimumValues().add(pair.getKey().getValue());
+                if(globalOptimumStepCount2 < minimumOptimumStep2){
+                    minimumOptimumStep2 = globalOptimumStepCount2;
                 }
             }
-            if(minimumOptimumStep < 10000)
-                statistics.getFoundGlobalOptimumMinimumSteps().add(minimumOptimumStep);
+        }
+        if(minimumOptimumStep2 < 10000)
+            statistics.getFoundGlobalOptimumMinimumSteps().add(minimumOptimumStep2);
 
-            //printWriter.println("Global optimum found: " + globalFound);
-            if (globalFound) {
-                //printWriter.println("Global optimum step count: " + globalOptimumStepCount);
+
+
+
+        /*boolean globalFound = false;
+        Iterator it = foundOptimums.entrySet().iterator();
+        int globalOptimumStepCount = 0;
+        int minimumOptimumStep = 10000;
+        while(it.hasNext()) {
+            Map.Entry<Field, Integer> pairs = (Map.Entry<Field, Integer>)it.next();
+            if (pairs.getKey().getValue() == globalOptimum.getValue()) {
+                globalFound = true;
+                globalOptimumStepCount = pairs.getValue();
+                statistics.getFoundGlobalOptimumSteps().add(globalOptimumStepCount);
+                statistics.getFoundGlobalOptimumValues().add(pairs.getKey().getValue());
+                if(globalOptimumStepCount < minimumOptimumStep){
+                    minimumOptimumStep = globalOptimumStepCount;
+                }
             }
-
-            //printWriter.println("All found optimums and step numbers:");
-            it = foundOptimums.entrySet().iterator();
-            while(it.hasNext()) {
-                Map.Entry<Field, Integer> pairs = (Map.Entry<Field, Integer>)it.next();
-                //printWriter.println(pairs.getKey() + ", step count: " + pairs.getValue());
-                statistics.getFoundOptimumSteps().add(pairs.getValue());
-                statistics.getFoundOptimumValues().add(pairs.getKey().getValue());
-            }
+        }
+        if(minimumOptimumStep < 10000)
+            statistics.getFoundGlobalOptimumMinimumSteps().add(minimumOptimumStep);*/
 
 
-            //printWriter.println("Total search time in nanos: " + searchTimeNano);
-            //printWriter.close();
+        for (int i = 0; i < foundOptimums2.size(); i++) {
+            Pair<Field, Integer> pair = foundOptimums2.get(i);
+            statistics.getFoundOptimumSteps().add(pair.getValue());
+            statistics.getFoundOptimumValues().add(pair.getKey().getValue());
+        }
 
-//            statistics.createStatistics();
 
-        //} catch (IOException e) {
-            //e.printStackTrace();
-        //}
+        //printWriter.println("All found optimums and step numbers:");
+        /*Iterator it = foundOptimums.entrySet().iterator();
+        while(it.hasNext()) {
+            Map.Entry<Field, Integer> pairs = (Map.Entry<Field, Integer>)it.next();
+            //printWriter.println(pairs.getKey() + ", step count: " + pairs.getValue());
+            statistics.getFoundOptimumSteps().add(pairs.getValue());
+            statistics.getFoundOptimumValues().add(pairs.getKey().getValue());
+        }*/
+
     }
 }

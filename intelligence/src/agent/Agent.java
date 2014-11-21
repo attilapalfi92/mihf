@@ -3,7 +3,6 @@ package agent;
 import Events.AgentFinishedRunning;
 import Events.RoundFinishedHandler;
 import field.Field;
-import javafx.util.Pair;
 import main.Application;
 
 import java.util.ArrayList;
@@ -18,6 +17,7 @@ public class Agent {
     private static int IDcounter = 0;
     private int stepCounter;
     private int ID;
+    private long startTimeNano;
 
     public Field getField() {
         return field;
@@ -40,8 +40,8 @@ public class Agent {
         this.field = field;
     }
 
-    public Pair<Field, Integer> run() {
-
+    public ReturnStructure run() {
+        startTimeNano = System.nanoTime();
         int numberOfStays = 0;
         while (numberOfStays < 4) {
 
@@ -111,8 +111,11 @@ public class Agent {
             */
         }
         //finishedHandler.onAgentFinishedRunning(this,Application.fieldManager.getField(field.getX(), field.getY()).getValue(), stepCounter);
-        Pair<Field, Integer> v = new Pair<Field, Integer>(Application.fieldManager.getField(field.getX(), field.getY()), stepCounter);
-        return v;
+
+        long totalRunTime = System.nanoTime() - startTimeNano;
+        //Pair<Field, Integer> v = new Pair<Field, Integer>(Application.fieldManager.getField(field.getX(), field.getY()), stepCounter);
+        ReturnStructure ret = new ReturnStructure(Application.fieldManager.getField(field.getX(), field.getY()), stepCounter, totalRunTime);
+        return ret;
     }
 
 

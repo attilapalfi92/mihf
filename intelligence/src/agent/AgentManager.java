@@ -19,7 +19,6 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning 
     private ArrayList<Field> foundValues;
     private GraphicHandler handler;
     private int agentNumber;
-    private long startTimeNano;
     private Statistics statistics;
 
     public AgentManager(int K, GraphicHandler handler_, Statistics statistics) {
@@ -29,7 +28,6 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning 
         this.statistics = statistics;
         int fieldSize = Application.fieldManager.getFieldSize();
         agents = new ArrayList<Agent>();
-        startTimeNano = System.nanoTime();
 
         /*for(int i = 0; i < agentNumber; i++)
         {
@@ -52,13 +50,18 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning 
             temp.setField(new Field(startposX, startposY));
             temp.setRoundHandler(this);
             agents.add(temp);
-            Pair<Field, Integer> optimum = temp.run();
-            foundValues.add(optimum.getKey());
-            agents.remove(temp);
-            Logger.getFoundOptimums().put(optimum.getKey(), optimum.getValue());
+            ReturnStructure foundOptimum = temp.run();
+            //Pair<Field, Integer> optimum = temp.run();
+            foundValues.add(foundOptimum.getField());
+            //foundValues.add(optimum.getKey());
+            //agents.remove(temp);
+            Logger.getFoundOptimums2().add(new Pair<Field, Integer>(foundOptimum.getField(), foundOptimum.getStepCount()));
+            //Logger.getFoundOptimums().put(optimum.getKey(), optimum.getValue());
+            //Logger.getFoundOptimums2().add(new Pair<Field, Integer>(optimum.getKey(), optimum.getValue()));
+            Logger.getSearchTimesNano().add(foundOptimum.getRunTime());
         }
-        long totalRunTime = System.nanoTime() - startTimeNano;
-        Logger.setSearchTimeNano(totalRunTime);
+
+        //Logger.setSearchTimeNano(totalRunTime);
         Logger.finalizeLogging(statistics);
         //System.out.println("Search finished!");
     }
