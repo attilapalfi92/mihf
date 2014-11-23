@@ -6,7 +6,7 @@ import Log.Statistics;
 import agent.AgentManager;
 import field.FieldManager;
 
-import java.io.*;
+import java.util.Scanner;
 
 public class Application {
 
@@ -20,7 +20,7 @@ public class Application {
             fieldManager.generateField(-800);
             stats.getRealGlobalOptimumValues().add(fieldManager.getGlobalOptimum().getValue());
             Logger.setNumberOfBeams(numberOfAgents);
-            AgentManager agentManager = new AgentManager(numberOfAgents, null, stats);
+            AgentManager agentManager = new AgentManager(numberOfAgents, null, stats, false);
             agentManager.startAgentSimulation();
         }
         stats.createStatistics();
@@ -33,7 +33,7 @@ public class Application {
             Logger.reInitialize();
             Logger.setGlobalOptimum(fieldManager.getGlobalOptimum());
             Logger.setNumberOfBeams(numberOfAgents);
-            AgentManager agentManager = new AgentManager(numberOfAgents, null, stats);
+            AgentManager agentManager = new AgentManager(numberOfAgents, null, stats, false);
             agentManager.startAgentSimulation();
         }
         stats.createStatistics();
@@ -45,69 +45,51 @@ public class Application {
         Window window = new Window();
         Logger.setNumberOfBeams(numberOfAgents);
         Logger.setGlobalOptimum(fieldManager.getGlobalOptimum());
-        AgentManager agentManager = new AgentManager(numberOfAgents, window.getPanel(), stats);
+        AgentManager agentManager = new AgentManager(numberOfAgents, window.getPanel(), stats, true);
         agentManager.startAgentSimulation();
-        stats.createStatistics();
     }
 
 
     public static void main(String[] args) {
-        File numberOfRunsFile = new File("numberofruns.txt");
-        BufferedReader reader = null;
+        System.out.println("Please add the required difficulty of the map (search space).");
+        System.out.println("This value should be an integer from 1 to 10000");
+        Scanner scanner = new Scanner(System.in);
+        int difficulty = scanner.nextInt();
+        if (difficulty > 0)
+            difficulty = 0 - difficulty;
 
-        /*try {
-            reader = new BufferedReader(new FileReader(numberOfRunsFile));
-            String numOfRuns = null;
 
-            numOfRuns = reader.readLine();
-            int num = Integer.parseInt(numOfRuns);
-            Logger.setRunCounter(num);
-            reader.close();
+        System.out.println("Next you will have to add the required number of searches. " +
+                "After that, the program will run some searches based on your given numbers " +
+                "and on the predefined logic.");
+        System.out.println("After that, a search with 100 beams will be showed you on the generated search space.");
+        System.out.println("Generating the search space...");
 
-            FileWriter fileWriter = new FileWriter(numberOfRunsFile);
-            PrintWriter printWriter = new PrintWriter(fileWriter);
-            printWriter.println(++num);
-            fileWriter.close();
+        fieldManager.generateField(difficulty);
 
-        } catch (FileNotFoundException e) {
-            try {
-                FileWriter fileWriter = new FileWriter(numberOfRunsFile);
-                PrintWriter printWriter = new PrintWriter(fileWriter);
-                printWriter.println("1");
-                fileWriter.close();
+        System.out.println("Please add the required number of searches.");
+        System.out.println("The program is going to perform this number of searches with the following number of beams: ");
+        System.out.println("1,   5,   10,   25,   50,   100");
+        int numberOfSearches = scanner.nextInt();
+        if (numberOfSearches < 1) {
+            System.out.println(numberOfSearches + " is an invalid value. This number must be bigger than 0. The program is terminating");
+            System.exit(1);
+        }
 
-                Logger.setRunCounter(1);
-                fileWriter.close();
 
-            } catch (FileNotFoundException e1) {
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-            System.out.println("numberofruns.txt not found. Creating one.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-        //graphicalRun(10);
-        fieldManager.generateField(-1200);
-        //runOnSame(2, 2);
-        runOnSame(100, 1);
+        runOnSame(numberOfSearches, 1);
         Logger.reInitialize();
-        runOnSame(100, 5);
+        runOnSame(numberOfSearches, 5);
         Logger.reInitialize();
-        runOnSame(100, 10);
+        runOnSame(numberOfSearches, 10);
         Logger.reInitialize();
-        runOnSame(100, 25);
+        runOnSame(numberOfSearches, 25);
         Logger.reInitialize();
-        runOnSame(100, 50);
+        runOnSame(numberOfSearches, 50);
         Logger.reInitialize();
-        runOnSame(100, 100);
+        runOnSame(numberOfSearches, 100);
         Logger.reInitialize();
         graphicalRun(100);
-        /*
-        Window window = new Window();
-        int numberOfBeams = 50;
-        Logger.setNumberOfBeams(numberOfBeams);
-        AgentManager agentManager = new AgentManager(numberOfBeams, window.getPanel());*/
     }
 
 }
