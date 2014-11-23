@@ -1,7 +1,7 @@
 package Log;
 
 import field.Field;
-import javafx.util.Pair;
+import java.util.AbstractMap.SimpleEntry;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ public class Logger {
     private static Field globalOptimum;
     //done
     //private static HashMap<Field, Integer> foundOptimums = new HashMap<Field, Integer>();
-    private static ArrayList<Pair<Field, Integer>> foundOptimums2 = new ArrayList<Pair<Field, Integer>>();
+    private static ArrayList<SimpleEntry<Field, Integer>> foundOptimums2 = new ArrayList<SimpleEntry<Field, Integer>>();
     // done
     private static int numberOfBeams;
     // done
@@ -24,7 +24,7 @@ public class Logger {
 
     public static void reInitialize() {
         globalOptimum = null;
-        foundOptimums2 = new ArrayList<Pair<Field, Integer>>();
+        foundOptimums2 = new ArrayList<SimpleEntry<Field, Integer>>();
         numberOfBeams = 0;
         searchTimesNano = new ArrayList<Long>();
 
@@ -94,11 +94,11 @@ public class Logger {
         Logger.searchTimeNano = searchTimeNano;
     }*/
 
-    public static ArrayList<Pair<Field, Integer>> getFoundOptimums2() {
+    public static ArrayList<SimpleEntry<Field, Integer>> getFoundOptimums2() {
         return foundOptimums2;
     }
 
-    public static void setFoundOptimums2(ArrayList<Pair<Field, Integer>> foundOptimums2) {
+    public static void setFoundOptimums2(ArrayList<SimpleEntry<Field, Integer>> foundOptimums2) {
         Logger.foundOptimums2 = foundOptimums2;
     }
 
@@ -118,7 +118,7 @@ public class Logger {
         for (int i = 0; i < foundOptimums2.size(); i++) {
             if (foundOptimums2.get(i).getKey().getValue() == globalOptimum.getValue()) {
                 globalFound2 = true;
-                Pair<Field, Integer> pair = foundOptimums2.get(i);
+                SimpleEntry<Field, Integer> pair = foundOptimums2.get(i);
                 globalOptimumStepCount2 = pair.getValue();
                 statistics.getFoundGlobalOptimumSteps().add(globalOptimumStepCount2);
                 statistics.getFoundGlobalOptimumValues().add(pair.getKey().getValue());
@@ -155,7 +155,7 @@ public class Logger {
 
 
         for (int i = 0; i < foundOptimums2.size(); i++) {
-            Pair<Field, Integer> pair = foundOptimums2.get(i);
+            SimpleEntry<Field, Integer> pair = foundOptimums2.get(i);
             statistics.getFoundOptimumSteps().add(pair.getValue());
             statistics.getFoundOptimumValues().add(pair.getKey().getValue());
         }

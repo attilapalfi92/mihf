@@ -5,8 +5,9 @@ import Events.GraphicHandler;
 import Events.RoundFinishedHandler;
 import Log.Logger;
 import Log.Statistics;
+import java.util.AbstractMap.SimpleEntry;
+
 import field.Field;
-import javafx.util.Pair;
 import main.Application;
 
 import java.util.ArrayList;
@@ -61,14 +62,14 @@ public class AgentManager implements RoundFinishedHandler, AgentFinishedRunning 
                 agents.add(temp);
                 ReturnStructure foundOptimum = temp.runSingeThreaded();
                 foundValues.add(foundOptimum.getField());
-                Logger.getFoundOptimums2().add(new Pair<Field, Integer>(foundOptimum.getField(), foundOptimum.getStepCount()));
+                Logger.getFoundOptimums2().add(new SimpleEntry<Field, Integer>(foundOptimum.getField(), foundOptimum.getStepCount()));
 
                 Logger.getSearchTimesNano().add(foundOptimum.getRunTime());
             }
             Logger.finalizeLogging(statistics);
         }
         else
-        {
+        { 
             for (int i = 0; i < agentNumber; i++)
             {
                 Agent temp = new Agent(GUI);

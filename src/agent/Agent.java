@@ -183,7 +183,7 @@ public class Agent implements Runnable {
         //finishedHandler.onAgentFinishedRunning(this,Application.fieldManager.getField(field.getX(), field.getY()).getValue(), stepCounter);
 
         long totalRunTime = System.nanoTime() - startTimeNano;
-        //Pair<Field, Integer> v = new Pair<Field, Integer>(Application.fieldManager.getField(field.getX(), field.getY()), stepCounter);
+        //Entry<Field, Integer> v = new Entry<Field, Integer>(Application.fieldManager.getField(field.getX(), field.getY()), stepCounter);
         ReturnStructure ret = new ReturnStructure(Application.fieldManager.getField(field.getX(), field.getY()), stepCounter, totalRunTime);
         return ret;
     }
