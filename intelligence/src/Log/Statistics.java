@@ -15,15 +15,103 @@ public class Statistics {
     // each time a beam finds the global optimum, it's step number must be added to this list
     private ArrayList<Integer> foundGlobalOptimumSteps = new ArrayList<Integer>();
 
+    private ArrayList<Integer> foundGlobalOptimumMinimumSteps = new ArrayList<Integer>();
+
     // each time a beam finds an optimum, it's value must be added to this list
     private ArrayList<Double> foundOptimumValues = new ArrayList<Double>();
 
-    private double globalOptimumValue;
+    // each time a beam finds a global optimum, it's value must be added to this list
+    private ArrayList<Double> foundGlobalOptimumValues = new ArrayList<Double>();
+
+    private ArrayList<Double> realGlobalOptimumValues = new ArrayList<Double>();
+
+    private ArrayList<Long> runTimeValues = new ArrayList<Long>();
+
+    private int globalOptimumFoundCounter;
 
     public Statistics(int runNumber, int beamNumber) {
         this.runNumber = runNumber;
         this.beamNumber = beamNumber;
-        globalOptimumValue = 0;
+        globalOptimumFoundCounter = 0;
+    }
+
+    public void createStatistics() {
+        //float globalOptimumFindRate = ((float)foundGlobalOptimumSteps.size()) / runNumber;
+        float globalOptimumFindRate = ((float)globalOptimumFoundCounter) / runNumber;
+        System.out.println("Number of beams: " + beamNumber);
+        System.out.println("Number of searches: " + runNumber);
+        System.out.println("Rate of finding global optimums: " + globalOptimumFindRate);
+
+        int allStepsToGlobalOpt = 0;
+        //int minStepsToGlobalOpt = 10000;
+        for (int i = 0; i < foundGlobalOptimumSteps.size(); i++) {
+            //if(foundGlobalOptimumSteps.get(i) < minStepsToGlobalOpt)
+            //    minStepsToGlobalOpt = foundGlobalOptimumSteps.get(i);
+
+            allStepsToGlobalOpt += foundGlobalOptimumSteps.get(i);
+        }
+        double averageStepsToGlobalOpt = 0;
+        if(foundGlobalOptimumSteps.size() > 0) {
+            averageStepsToGlobalOpt = ((double)allStepsToGlobalOpt) / foundGlobalOptimumSteps.size();
+            System.out.println("Average steps to find global optimums: " + averageStepsToGlobalOpt);
+            //System.out.println("Minimum steps to find global optimum: " + minStepsToGlobalOpt);
+        }
+        else
+            System.out.println("Average steps to find global optimums: " + "No global optimums found.");
+
+        double allMinimumStepsToGlobalOpt = 0;
+        for(int i=0; i<foundGlobalOptimumMinimumSteps.size();i++){
+            allMinimumStepsToGlobalOpt+=foundGlobalOptimumMinimumSteps.get(i);
+        }
+        double averageMinimumStepsToGlobalOpt = 0;
+        if(foundGlobalOptimumMinimumSteps.size() > 0){
+            averageMinimumStepsToGlobalOpt = allMinimumStepsToGlobalOpt / foundGlobalOptimumMinimumSteps.size();
+            System.out.println("Average minimum steps to find global optimums: " + averageMinimumStepsToGlobalOpt);
+        }
+
+        int allStepsToOpt = 0;
+        for (int i = 0; i < foundOptimumSteps.size(); i++) {
+            allStepsToOpt += foundOptimumSteps.get(i);
+        }
+        double averageStepsToOpt = ((double)allStepsToOpt) / foundOptimumSteps.size();
+        System.out.println("Average steps to find optimums: " + averageStepsToOpt);
+
+        double allValuesOfGlobalOpt = 0;
+        for (int i = 0; i < foundGlobalOptimumValues.size(); i++) {
+            allValuesOfGlobalOpt += foundGlobalOptimumValues.get(i);
+        }
+        if (foundGlobalOptimumValues.size() > 0) {
+            double averageGlobalOptimumValues = allValuesOfGlobalOpt / foundGlobalOptimumValues.size();
+            System.out.println("Average values of found global optimums: " + averageGlobalOptimumValues);
+        }
+        else
+            System.out.println("Average values of found global optimums: " + "No global optimums found.");
+
+        double allValuesOfOpt = 0;
+        for (int i = 0; i < foundOptimumValues.size(); i++) {
+            allValuesOfOpt += foundOptimumValues.get(i);
+        }
+        double averageOptimumValues = allValuesOfOpt / foundOptimumValues.size();
+        System.out.println("Average values of found optimums: " + averageOptimumValues);
+
+
+        double allValuesOfRealGlobalOpt = 0;
+        for (int i = 0; i < realGlobalOptimumValues.size(); i++) {
+            allValuesOfRealGlobalOpt += realGlobalOptimumValues.get(i);
+        }
+        double averageOptimumRealGlobalOptimumValues = allValuesOfRealGlobalOpt / realGlobalOptimumValues.size();
+        System.out.println("Average values of real global optimums: " + averageOptimumRealGlobalOptimumValues);
+
+        long allRunTimeValues = 0;
+        for (int i = 0; i < runTimeValues.size(); i++)
+            allRunTimeValues += runTimeValues.get(i);
+
+        double averageRunTimeValues = (double)allRunTimeValues / runTimeValues.size();
+        System.out.println("Average values of run times: " + averageRunTimeValues);
+    }
+
+    public ArrayList<Double> getFoundGlobalOptimumValues() {
+        return foundGlobalOptimumValues;
     }
 
     public int getRunNumber() {
@@ -50,15 +138,25 @@ public class Statistics {
         return foundGlobalOptimumSteps;
     }
 
+    public ArrayList<Integer> getFoundGlobalOptimumMinimumSteps() { return foundGlobalOptimumMinimumSteps; }
+
     public ArrayList<Double> getFoundOptimumValues() {
         return foundOptimumValues;
     }
 
-    public double getGlobalOptimumValue() {
-        return globalOptimumValue;
+    public ArrayList<Double> getRealGlobalOptimumValues() {
+        return realGlobalOptimumValues;
     }
 
-    public void setGlobalOptimumValue(double globalOptimumValue) {
-        this.globalOptimumValue = globalOptimumValue;
+    public ArrayList<Long> getRunTimeValues() {
+        return runTimeValues;
+    }
+
+    public int getGlobalOptimumFoundCounter() {
+        return globalOptimumFoundCounter;
+    }
+
+    public void setGlobalOptimumFoundCounter(int globalOptimumFoundCounter) {
+        this.globalOptimumFoundCounter = globalOptimumFoundCounter;
     }
 }
