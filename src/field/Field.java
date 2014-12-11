@@ -48,6 +48,12 @@ public class Field {
         Y = y;
     }
 
+    public boolean Equal(Field f){
+        if(f.getX()==getX() && f.getY()==getY())
+            return true;
+        return false;
+    }
+
     public void setValue (double value)
     {
         this.value = value;

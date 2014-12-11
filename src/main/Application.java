@@ -4,6 +4,7 @@ import Gui.Window;
 import Log.Logger;
 import Log.Statistics;
 import agent.AgentManager;
+import beam.BeamManager;
 import field.FieldManager;
 
 import java.util.Scanner;
@@ -49,6 +50,31 @@ public class Application {
         agentManager.startAgentSimulation();
     }
 
+    public static void beamRunOnSame(int numberOfRuns, int numberOfBeams){
+        Statistics stats = new Statistics(numberOfRuns, numberOfBeams);
+        stats.getRealGlobalOptimumValues().add(fieldManager.getGlobalOptimum().getValue());
+        for (int i = 0; i < numberOfRuns; i++) {
+            Logger.reInitialize();
+            Logger.setGlobalOptimum(fieldManager.getGlobalOptimum());
+            Logger.setNumberOfBeams(numberOfBeams);
+            BeamManager beamManager = new BeamManager(numberOfBeams, null, stats, false,40);
+            beamManager.StartBeamSearch();
+        }
+        //stats.createStatistics();
+    }
+    public static void beamGraphicalRun( int numberOfBeams){
+        Statistics stats = new Statistics(1, numberOfBeams);
+        stats.getRealGlobalOptimumValues().add(fieldManager.getGlobalOptimum().getValue());
+        Logger.reInitialize();
+        Logger.setGlobalOptimum(fieldManager.getGlobalOptimum());
+        Logger.setNumberOfBeams(numberOfBeams);
+        Window window = new Window();
+        window.getPanel().setBeams(true);
+        BeamManager beamManager = new BeamManager(numberOfBeams, window.getPanel(), stats, true,4);
+        beamManager.StartBeamSearch();
+        //stats.createStatistics();
+    }
+
 
     public static void main(String[] args) {
         System.out.println("Please add the required difficulty of the map (search space).");
@@ -75,9 +101,9 @@ public class Application {
             System.out.println(numberOfSearches + " is an invalid value. This number must be bigger than 0. The program is terminating");
             System.exit(1);
         }
-
-
-        runOnSame(numberOfSearches, 1);
+        System.out.println(fieldManager.getGlobalOptimum().getValue());
+        beamGraphicalRun(1000);
+        /*runOnSame(numberOfSearches, 1);
         Logger.reInitialize();
         runOnSame(numberOfSearches, 5);
         Logger.reInitialize();
@@ -89,7 +115,7 @@ public class Application {
         Logger.reInitialize();
         runOnSame(numberOfSearches, 100);
         Logger.reInitialize();
-        graphicalRun(100);
+        graphicalRun(100);*/
     }
 
 }

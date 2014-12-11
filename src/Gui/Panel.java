@@ -18,6 +18,8 @@ public class Panel extends JPanel implements GraphicHandler {
     private Color[][] fieldColors;
     private ArrayList<Agent> agents;
     private ArrayList<Field> foundFields;
+    private ArrayList<Field> activeFields;
+    private boolean beams;
 
     public Panel(int resolution_, int pixelCount_) {
         resolution = resolution_;
@@ -25,7 +27,13 @@ public class Panel extends JPanel implements GraphicHandler {
         fieldColors = new Color[pixelCount][pixelCount];
         agents = new ArrayList<Agent>();
         foundFields = new ArrayList<Field>();
+        activeFields= new ArrayList<Field>();
+        beams=false;
         recalculateFieldColors();
+    }
+
+    public void setBeams(boolean b){
+        beams=b;
     }
 
     public void recalculateFieldColors(){
@@ -76,14 +84,29 @@ public class Panel extends JPanel implements GraphicHandler {
                 g.fillRect(x, y, 1, 1);
             }
         }
+        if(beams){
+            g.setColor(new Color(255, 255, 255));
 
-        g.setColor(new Color(0, 0, 0));
-        for(int i = 0; i < agents.size(); i++) {
-            g.fillRect(agents.get(i).getField().getX() - 1, agents.get(i).getField().getY() - 1, 2, 2);
-        }
+            if(foundFields!=null){
+                for(int i = 0; i < foundFields.size(); i++) {
+                    g.fillRect(foundFields.get(i).getX() - 1, foundFields.get(i).getY() - 1, 2, 2);
+                }
+            }
+            g.setColor(new Color(0, 0, 0));
+            for(int i = 0; i < activeFields.size(); i++) {
+                g.fillRect(activeFields.get(i).getX() - 1, activeFields.get(i).getY() - 1, 2, 2);
+            }
 
-        for(int i = 0; i < foundFields.size(); i++) {
-            g.fillRect(foundFields.get(i).getX() - 1, foundFields.get(i).getY() - 1, 2, 2);
+        }else{
+            g.setColor(new Color(0, 0, 0));
+            for(int i = 0; i < agents.size(); i++) {
+                g.fillRect(agents.get(i).getField().getX() - 1, agents.get(i).getField().getY() - 1, 2, 2);
+            }
+
+            for(int i = 0; i < foundFields.size(); i++) {
+                g.fillRect(foundFields.get(i).getX() - 1, foundFields.get(i).getY() - 1, 2, 2);
+            }
+
         }
     }
 
@@ -91,6 +114,13 @@ public class Panel extends JPanel implements GraphicHandler {
     public void onRedraw(ArrayList<Agent> agents_, ArrayList<Field> foundFields_) {
         if (agents_ != agents)
             agents = agents_;
+        if (foundFields != foundFields_)
+            foundFields = foundFields_;
+        repaint();
+    }
+    public void onRedrawBeams(ArrayList<Field> activeFields_, ArrayList<Field> foundFields_) {
+        if (activeFields_ != activeFields)
+            activeFields = activeFields_;
         if (foundFields != foundFields_)
             foundFields = foundFields_;
         repaint();
