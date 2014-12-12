@@ -8,6 +8,7 @@ import main.Application;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Attila on 2014.11.18..
@@ -19,7 +20,9 @@ public class Panel extends JPanel implements GraphicHandler {
     private ArrayList<Agent> agents;
     private ArrayList<Field> foundFields;
     private ArrayList<Field> activeFields;
+    private Iterator<Field> activeIterator;
     private boolean beams;
+    private boolean newGenerationDraw;
 
     public Panel(int resolution_, int pixelCount_) {
         resolution = resolution_;
@@ -30,6 +33,7 @@ public class Panel extends JPanel implements GraphicHandler {
         activeFields= new ArrayList<Field>();
         beams=false;
         recalculateFieldColors();
+        newGenerationDraw = false;
     }
 
     public void setBeams(boolean b){
@@ -92,10 +96,25 @@ public class Panel extends JPanel implements GraphicHandler {
                     g.fillRect(foundFields.get(i).getX() - 1, foundFields.get(i).getY() - 1, 2, 2);
                 }
             }
-            g.setColor(new Color(0, 0, 0));
-            for(int i = 0; i < activeFields.size(); i++) {
-                g.fillRect(activeFields.get(i).getX() - 1, activeFields.get(i).getY() - 1, 2, 2);
+
+            if(newGenerationDraw) {
+                g.setColor(new Color(0, 0, 0));
+                while(activeIterator.hasNext())
+                {
+                    Field temp = activeIterator.next();
+                    g.fillRect(temp.getX() - 1, temp.getY() - 1, 2, 2);
+                }
             }
+
+            else
+            {
+                g.setColor(new Color(0, 0, 0));
+                for(int i = 0; i < activeFields.size(); i++) {
+                    g.fillRect(activeFields.get(i).getX() - 1, activeFields.get(i).getY() - 1, 2, 2);
+                }
+            }
+
+
 
         }else{
             g.setColor(new Color(0, 0, 0));
@@ -118,11 +137,25 @@ public class Panel extends JPanel implements GraphicHandler {
             foundFields = foundFields_;
         repaint();
     }
+
     public void onRedrawBeams(ArrayList<Field> activeFields_, ArrayList<Field> foundFields_) {
+        newGenerationDraw = false;
         if (activeFields_ != activeFields)
             activeFields = activeFields_;
         if (foundFields != foundFields_)
             foundFields = foundFields_;
         repaint();
+    }
+
+    public void onRedrawBeams(Iterator<Field> activeIterator_, ArrayList<Field> foundFields_) {
+        newGenerationDraw = true;
+        activeIterator = activeIterator_;
+        if (foundFields != foundFields_)
+            foundFields = foundFields_;
+        repaint();
+    }
+
+    public void setNewGenerationDraw(boolean newGenerationDraw) {
+        this.newGenerationDraw = newGenerationDraw;
     }
 }
