@@ -16,11 +16,12 @@ public class SortedList implements ISortedList {
     int elementNum;
     boolean full;
 
-    public SortedList() {
+    public SortedList(int K) {
         comparator = new FieldComparator();
         treeSet = new TreeSet<Field>(comparator);
         elementNum = 0;
         full = false;
+        limit = K;
     }
 
     @Override

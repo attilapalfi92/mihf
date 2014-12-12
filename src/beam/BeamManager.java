@@ -30,8 +30,8 @@ public class BeamManager {
         timesOfNoNewOpt = 0;
         maxTimesOfNoNewOpt = t;
         sizeOfBeam = K;
-        temp = new ArrayList<Field>(K);
-        sortedList = new SortedList();
+        temp = new ArrayList<Field>();
+        sortedList = new SortedList(K);
     }
 
     public void doTheSearch(){
