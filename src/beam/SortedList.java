@@ -3,6 +3,7 @@ package beam;
 import field.Field;
 import field.FieldComparator;
 
+import java.util.Iterator;
 import java.util.TreeSet;
 
 /**
@@ -48,5 +49,10 @@ public class SortedList implements ISortedList {
     @Override
     public Field getField() {
         return treeSet.last();
+    }
+
+    @Override
+    public Iterator<Field> iterator() {
+        return treeSet.iterator();
     }
 }
