@@ -42,7 +42,8 @@ public class SortedList implements ISortedList {
         }
         else {
             treeSet.add(F);
-            elementNum++;
+            if(++elementNum == limit)
+                full = true;
         }
     }
 

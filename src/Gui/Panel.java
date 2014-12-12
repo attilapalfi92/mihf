@@ -19,8 +19,8 @@ public class Panel extends JPanel implements GraphicHandler {
     private Color[][] fieldColors;
     private ArrayList<Agent> agents;
     private ArrayList<Field> foundFields;
-    private ArrayList<Field> activeFields;
-    private Iterator<Field> activeIterator;
+    private ArrayList<Field> temp;
+    private Iterator<Field> foundIterator;
     private boolean beams;
     private boolean newGenerationDraw;
 
@@ -30,7 +30,7 @@ public class Panel extends JPanel implements GraphicHandler {
         fieldColors = new Color[pixelCount][pixelCount];
         agents = new ArrayList<Agent>();
         foundFields = new ArrayList<Field>();
-        activeFields= new ArrayList<Field>();
+        temp = new ArrayList<Field>();
         beams=false;
         recalculateFieldColors();
         newGenerationDraw = false;
@@ -91,17 +91,17 @@ public class Panel extends JPanel implements GraphicHandler {
         if(beams){
             g.setColor(new Color(255, 255, 255));
 
-            if(foundFields!=null){
-                for(int i = 0; i < foundFields.size(); i++) {
-                    g.fillRect(foundFields.get(i).getX() - 1, foundFields.get(i).getY() - 1, 2, 2);
+            if(temp!=null){
+                for(int i = 0; i < temp.size(); i++) {
+                    g.fillRect(temp.get(i).getX() - 1, temp.get(i).getY() - 1, 2, 2);
                 }
             }
 
             if(newGenerationDraw) {
                 g.setColor(new Color(0, 0, 0));
-                while(activeIterator.hasNext())
+                while(foundIterator.hasNext())
                 {
-                    Field temp = activeIterator.next();
+                    Field temp = foundIterator.next();
                     g.fillRect(temp.getX() - 1, temp.getY() - 1, 2, 2);
                 }
             }
@@ -109,8 +109,8 @@ public class Panel extends JPanel implements GraphicHandler {
             else
             {
                 g.setColor(new Color(0, 0, 0));
-                for(int i = 0; i < activeFields.size(); i++) {
-                    g.fillRect(activeFields.get(i).getX() - 1, activeFields.get(i).getY() - 1, 2, 2);
+                for(int i = 0; i < foundFields.size(); i++) {
+                    g.fillRect(foundFields.get(i).getX() - 1, foundFields.get(i).getY() - 1, 2, 2);
                 }
             }
 
@@ -138,20 +138,20 @@ public class Panel extends JPanel implements GraphicHandler {
         repaint();
     }
 
-    public void onRedrawBeams(ArrayList<Field> activeFields_, ArrayList<Field> foundFields_) {
+    public void onRedrawBeams(ArrayList<Field> foundFields_, ArrayList<Field> temp_) {
         newGenerationDraw = false;
-        if (activeFields_ != activeFields)
-            activeFields = activeFields_;
+        if (temp != temp_)
+            temp = temp_;
         if (foundFields != foundFields_)
             foundFields = foundFields_;
         repaint();
     }
 
-    public void onRedrawBeams(Iterator<Field> activeIterator_, ArrayList<Field> foundFields_) {
+    public void onRedrawBeams(Iterator<Field> foundIterator_, ArrayList<Field> temp_) {
         newGenerationDraw = true;
-        activeIterator = activeIterator_;
-        if (foundFields != foundFields_)
-            foundFields = foundFields_;
+        foundIterator = foundIterator_;
+        if (temp != temp_)
+            temp = temp_;
         repaint();
     }
 
