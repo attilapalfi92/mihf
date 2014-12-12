@@ -57,10 +57,11 @@ public class Application {
             Logger.reInitialize();
             Logger.setGlobalOptimum(fieldManager.getGlobalOptimum());
             Logger.setNumberOfBeams(numberOfBeams);
-            BeamManager beamManager = new BeamManager(numberOfBeams, null, stats, false,40);
+            BeamManager beamManager = new BeamManager(numberOfBeams, null, stats, false, 40);
             beamManager.doTheSearch();
         }
-    stats.createStatistics();
+        stats.createStatistics();
+        System.out.println("");
     }
     public static void beamGraphicalRun( int numberOfBeams){
         Statistics stats = new Statistics(1, numberOfBeams);
@@ -70,9 +71,8 @@ public class Application {
         Logger.setNumberOfBeams(numberOfBeams);
         Window window = new Window();
         window.getPanel().setBeams(true);
-        BeamManager beamManager = new BeamManager(numberOfBeams, window.getPanel(), stats, true,4);
+        BeamManager beamManager = new BeamManager(numberOfBeams, window.getPanel(), stats, true, 40);
         beamManager.doTheSearch();
-        //stats.createStatistics();
     }
 
 
@@ -85,9 +85,9 @@ public class Application {
             difficulty = 0 - difficulty;
 
 
-        System.out.println("Next you will have to add the required number of searches. " +
-                "After that, the program will run some searches based on your given numbers " +
-                "and on the predefined logic.");
+        System.out.println("Next you will have to add the required number of searches. \n" +
+                "After that, the program will run some searches based on your given numbers \n" +
+                "and on the predefined logic.\n");
         System.out.println("After that, a search with 100 beams will be showed you on the generated search space.");
         System.out.println("Generating the search space...");
 
@@ -103,7 +103,12 @@ public class Application {
         }
         System.out.println(fieldManager.getGlobalOptimum().getValue());
         //beamGraphicalRun(1000);
-        beamRunOnSame(10,1000);
+        beamRunOnSame(numberOfSearches, 1);
+        beamRunOnSame(numberOfSearches, 5);
+        beamRunOnSame(numberOfSearches, 10);
+        beamRunOnSame(numberOfSearches, 25);
+        beamRunOnSame(numberOfSearches, 50);
+        beamRunOnSame(numberOfSearches, 100);
         /*runOnSame(numberOfSearches, 1);
         Logger.reInitialize();
         runOnSame(numberOfSearches, 5);
@@ -117,6 +122,7 @@ public class Application {
         runOnSame(numberOfSearches, 100);
         Logger.reInitialize();
         graphicalRun(100);*/
+        beamGraphicalRun(100);
     }
 
 }
