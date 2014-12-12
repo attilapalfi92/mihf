@@ -47,7 +47,7 @@ public class BeamManager {
 
         while(timesOfNoNewOpt < maxTimesOfNoNewOpt){
             long checktime = System.currentTimeMillis();
-
+            temp.clear();
             for (Iterator<Field> i= sortedList.iterator(); i.hasNext();){
                 temp.add(i.next());
             }
@@ -95,7 +95,7 @@ public class BeamManager {
         }
         //TODO: rewrite this
         if(handler == null) {
-            Logger.getFoundOptimums2().add(new AbstractMap.SimpleEntry<Field, Integer>(temp.get(0), stepCount));
+            Logger.getFoundOptimums2().add(new AbstractMap.SimpleEntry<Field, Integer>(sortedList.getField(), stepCount));
             Logger.getSearchTimesNano().add(System.nanoTime() - searchTime);
             Logger.finalizeLogging(statistics);
         }

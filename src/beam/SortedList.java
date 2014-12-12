@@ -38,8 +38,9 @@ public class SortedList implements ISortedList {
             // if F is larger, result is 1
             if (result > 0) {
                 treeSet.remove(first);
+                treeSet.add(F);
             }
-            treeSet.add(F);
+
         }
         else {
             treeSet.add(F);

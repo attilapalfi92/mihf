@@ -9,9 +9,10 @@ public class FieldComparator implements Comparator<Field> {
 
     @Override
     public int compare(Field o1, Field o2) {
-        if(o1.getValue() <= o2.getValue())
+        if(o1.getValue() == o2.getValue())
+            return 0;
+        if(o1.getValue() < o2.getValue())
             return -1;
-
         return 1;
     }
 }
