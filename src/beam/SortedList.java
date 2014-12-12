@@ -17,8 +17,8 @@ public class SortedList implements ISortedList {
     boolean full;
 
     public SortedList() {
-        FieldComparator comparator = new FieldComparator();
-        TreeSet<Field> treeSet = new TreeSet<Field>(comparator);
+        comparator = new FieldComparator();
+        treeSet = new TreeSet<Field>(comparator);
         elementNum = 0;
         full = false;
     }
