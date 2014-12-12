@@ -21,7 +21,9 @@ public class Window extends JFrame{
         this.setMinimumSize(new Dimension(windowSize, windowSize));
         this.setMaximumSize(new Dimension(windowSize, windowSize));
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setAlwaysOnTop(true);
         this.setVisible(true);
+
     }
 
     public Panel getPanel (){

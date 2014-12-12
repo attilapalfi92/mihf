@@ -58,9 +58,9 @@ public class Application {
             Logger.setGlobalOptimum(fieldManager.getGlobalOptimum());
             Logger.setNumberOfBeams(numberOfBeams);
             BeamManager beamManager = new BeamManager(numberOfBeams, null, stats, false,40);
-            beamManager.StartBeamSearch();
+            beamManager.doTheSearch();
         }
-        //stats.createStatistics();
+    stats.createStatistics();
     }
     public static void beamGraphicalRun( int numberOfBeams){
         Statistics stats = new Statistics(1, numberOfBeams);
@@ -71,7 +71,7 @@ public class Application {
         Window window = new Window();
         window.getPanel().setBeams(true);
         BeamManager beamManager = new BeamManager(numberOfBeams, window.getPanel(), stats, true,4);
-        beamManager.StartBeamSearch();
+        beamManager.doTheSearch();
         //stats.createStatistics();
     }
 
@@ -102,7 +102,8 @@ public class Application {
             System.exit(1);
         }
         System.out.println(fieldManager.getGlobalOptimum().getValue());
-        beamGraphicalRun(1000);
+        //beamGraphicalRun(1000);
+        beamRunOnSame(10,1000);
         /*runOnSame(numberOfSearches, 1);
         Logger.reInitialize();
         runOnSame(numberOfSearches, 5);

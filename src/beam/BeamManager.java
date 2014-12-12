@@ -1,10 +1,13 @@
 package beam;
 
 import Events.GraphicHandler;
+import Log.Logger;
 import Log.Statistics;
+import agent.ReturnStructure;
 import field.Field;
 import main.Application;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -32,7 +35,9 @@ public class BeamManager {
         foundFields =new ArrayList<Field>();
     }
 
-    public void StartBeamSearch(){
+    public void doTheSearch(){
+        int stepCount=0;
+        long searchTime=System.nanoTime();
         int fieldSize= Application.fieldManager.getFieldSize();
         double lastMaximumValue=0;
         for(int i=0;i<sizeOfBeam;i++){
@@ -97,8 +102,14 @@ public class BeamManager {
                 timesOfNoNewOpt=0;
                 lastMaximumValue=activeFields.get(0).getValue();
             }
+            stepCount++;
         }
-        System.out.println("The searh has ended"+String.valueOf(activeFields.get(0).getValue()));
+        if(handler == null) {
+            Logger.getFoundOptimums2().add(new AbstractMap.SimpleEntry<Field, Integer>(activeFields.get(0), stepCount));
+            Logger.getSearchTimesNano().add(System.nanoTime() - searchTime);
+            Logger.finalizeLogging(statistics);
+        }
+        //System.out.println("The searh has ended"+String.valueOf(activeFields.get(0).getValue()));
     }
 
 }
