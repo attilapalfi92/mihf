@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="mihf:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/mihf_jar</output-path>
+    <root id="archive" name="mihf.jar">
+      <element id="module-output" name="mihf" />
+    </root>
+  </artifact>
+</component>
