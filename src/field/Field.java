@@ -3,7 +3,7 @@ package field;
 /**
  * Created by Attila on 2014.11.18..
  */
-public class Field {
+public class Field implements Comparable<Field> {
     int X, Y;
     double value;
 
@@ -66,5 +66,13 @@ public class Field {
     @Override
     public String toString() {
         return new String("x = " + X + "\t" + "y = " + Y + "\t" + "value = " + value);
+    }
+
+    @Override
+    public int compareTo(Field o) {
+        if(value <= o.getValue())
+            return -1;
+
+        else return 1;
     }
 }
