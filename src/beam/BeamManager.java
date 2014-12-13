@@ -31,9 +31,9 @@ public class BeamManager {
         maxTimesOfNoNewOpt = t;
         sizeOfBeam = K;
         temp = new ArrayList<Field>();
-        //sortedList = new SortedList(K);
-        sortedList = new SortedList(600*600);
-        sizeOfBeam = 600 * 600;
+        sortedList = new SortedList(K);
+        //sortedList = new SortedList(600*600);
+        //sizeOfBeam = 600 * 600;
     }
 
     public void doTheSearch(){
@@ -56,7 +56,7 @@ public class BeamManager {
 
             if (handler != null){
                 handler.onRedrawBeams(temp, null);
-                long sleeptime = checktime + 100 - System.currentTimeMillis();
+                long sleeptime = checktime + 1000 - System.currentTimeMillis();
                 if(sleeptime > 0)
                     try {
                         Thread.sleep(sleeptime);
@@ -78,7 +78,7 @@ public class BeamManager {
             checktime = System.currentTimeMillis();
             if(handler != null){
                 handler.onRedrawBeams(sortedList.iterator(), temp);
-                long sleeptime = checktime + 500 - System.currentTimeMillis();
+                long sleeptime = checktime + 1000 - System.currentTimeMillis();
                 if(sleeptime > 0)
                     try {
                         Thread.sleep(sleeptime);

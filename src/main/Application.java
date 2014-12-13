@@ -104,7 +104,7 @@ public class Application {
         System.out.println(fieldManager.getGlobalOptimum().getValue());
         //beamGraphicalRun(1000);
         beamRunOnSame(numberOfSearches, 1);
-        /*beamRunOnSame(numberOfSearches, 5);
+        beamRunOnSame(numberOfSearches, 5);
         beamRunOnSame(numberOfSearches, 10);
         beamRunOnSame(numberOfSearches, 25);
         beamRunOnSame(numberOfSearches, 50);
@@ -112,7 +112,7 @@ public class Application {
         beamRunOnSame(numberOfSearches, 200);
         beamRunOnSame(numberOfSearches, 400);
         beamRunOnSame(numberOfSearches, 1000);
-        beamRunOnSame(numberOfSearches, 2000);*/
+        beamRunOnSame(numberOfSearches, 2000);
         /*runOnSame(numberOfSearches, 1);
         Logger.reInitialize();
         runOnSame(numberOfSearches, 5);
