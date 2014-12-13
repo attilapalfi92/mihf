@@ -57,7 +57,7 @@ public class Application {
             Logger.reInitialize();
             Logger.setGlobalOptimum(fieldManager.getGlobalOptimum());
             Logger.setNumberOfBeams(numberOfBeams);
-            BeamManager beamManager = new BeamManager(numberOfBeams, null, stats, false, 40);
+            BeamManager beamManager = new BeamManager(numberOfBeams, null, stats, false, 5);
             beamManager.doTheSearch();
         }
         stats.createStatistics();
