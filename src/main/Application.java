@@ -84,23 +84,23 @@ public class Application {
         if (difficulty > 0)
             difficulty = 0 - difficulty;
 
-
-        System.out.println("Next you will have to add the required number of searches. \n" +
-                "After that, the program will run some searches based on your given numbers \n" +
-                "and on the predefined logic.\n");
-        System.out.println("After that, a search with 100 beams will be showed you on the generated search space.");
-        System.out.println("Generating the search space...");
-
-        fieldManager.generateField(difficulty);
-
-        System.out.println("Please add the required number of searches.");
-        System.out.println("The program is going to perform this number of searches with the following number of beams: ");
-        System.out.println("1,   5,   10,   25,   50,   100");
+        System.out.println("Please add the required number of searches (eg. 100 or 1000).");
         int numberOfSearches = scanner.nextInt();
         if (numberOfSearches < 1) {
             System.out.println(numberOfSearches + " is an invalid value. This number must be bigger than 0. The program is terminating");
             System.exit(1);
         }
+
+        System.out.println("The program is going to perform this number of searches with the following beam sizes: ");
+        System.out.println("1,   5,   10,   25,   50,   100,    200,    400,    1000,   2000");
+        System.out.println("After that, a search with 1000 beams will be showed you on the generated search space.");
+
+        System.out.println("Generating the search space...");
+
+        fieldManager.generateField(difficulty);
+
+
+
         System.out.println(fieldManager.getGlobalOptimum().getValue());
         //beamGraphicalRun(1000);
         beamRunOnSame(numberOfSearches, 1);
