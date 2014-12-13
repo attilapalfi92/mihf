@@ -31,7 +31,9 @@ public class BeamManager {
         maxTimesOfNoNewOpt = t;
         sizeOfBeam = K;
         temp = new ArrayList<Field>();
-        sortedList = new SortedList(K);
+        //sortedList = new SortedList(K);
+        sortedList = new SortedList(600*600);
+        sizeOfBeam = 600 * 600;
     }
 
     public void doTheSearch(){
@@ -48,7 +50,7 @@ public class BeamManager {
         while(timesOfNoNewOpt < maxTimesOfNoNewOpt){
             long checktime = System.currentTimeMillis();
             temp.clear();
-            for (Iterator<Field> i= sortedList.iterator(); i.hasNext();){
+            for (Iterator<Field> i = sortedList.iterator(); i.hasNext();){
                 temp.add(i.next());
             }
 
@@ -64,7 +66,7 @@ public class BeamManager {
             }
 
             for (int i = 0; i < temp.size(); i++) {
-                Field currField= temp.get(i);
+                Field currField = temp.get(i);
                 int x=currField.getX();
                 int y=currField.getY();
                 sortedList.addField(Application.fieldManager.getField(x + 1, y));
