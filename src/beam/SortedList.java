@@ -13,13 +13,11 @@ public class SortedList implements ISortedList {
     private FieldComparator comparator;
     private TreeSet<Field> treeSet;
     private int limit;
-    int elementNum;
     boolean full;
 
     public SortedList(int K) {
         comparator = new FieldComparator();
         treeSet = new TreeSet<Field>(comparator);
-        elementNum = 0;
         full = false;
         limit = K;
     }
@@ -31,7 +29,7 @@ public class SortedList implements ISortedList {
 
     @Override
     public void addField(Field F) {
-        if(full) {
+        /*if(full) {
             Field first = treeSet.first();
             int result = comparator.compare(F, first);
             // if F is smaller, result is -1
@@ -44,8 +42,19 @@ public class SortedList implements ISortedList {
         }
         else {
             treeSet.add(F);
-            if(++elementNum == limit)
+            //if(++elementNum == limit)
                 full = true;
+        }
+*/
+        // not full
+        if (treeSet.size() < limit) {
+           treeSet.add(F);
+        }
+        // full
+        else {
+            if(treeSet.add(F)) {
+                treeSet.remove(treeSet.first());
+            }
         }
     }
 
